@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
@@ -18,6 +20,17 @@ use Illuminate\View\View;
 Route::get('/', function () {
     return view('dashboard');
 });
+
+Route::prefix('master')->group(function () {
+    Route::get('client',[ClientController::class,'index']);
+    Route::post('client',[ClientController::class,'post'])->name('client.post');
+    Route::put('client/{id}',[ClientController::class,'update'])->name('client.update');
+    Route::get('product',[ProductController::class,'index']);
+    Route::post('product',[ProductController::class,'post'])->name('product.post');
+    Route::put('product/{id}',[ProductController::class,'update'])->name('product.update');
+    Route::delete('product/{id}',[ProductController::class,'delete'])->name('product.delete');
+});
+
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
