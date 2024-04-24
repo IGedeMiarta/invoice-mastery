@@ -30,8 +30,17 @@ Route::prefix('master')->group(function () {
     Route::post('product',[ProductController::class,'post'])->name('product.post');
     Route::put('product/{id}',[ProductController::class,'update'])->name('product.update');
     Route::delete('product/{id}',[ProductController::class,'delete'])->name('product.delete');
+
 });
 
+Route::get('transaction/create',function(){
+    $data['title'] = 'Transaction';
+    return view('admin.transaction',$data);
+});
+Route::get('transaction/all',function(){
+    $data['title'] = 'Transaction';
+    return view('admin.transaction',$data);
+});
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

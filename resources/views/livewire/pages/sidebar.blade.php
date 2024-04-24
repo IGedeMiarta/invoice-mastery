@@ -20,12 +20,12 @@
                         <span class="link-title">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item nav-category">Master Data</li>
+                <li class="nav-item nav-category">Section</li>
                 <li class="nav-item {{ active_class(['master/*']) }}">
                     <a class="nav-link" data-toggle="collapse" href="#master" role="button"
                         aria-expanded="{{ is_active_route(['master/*']) }}" aria-controls="master">
                         <i class="link-icon" data-feather="tag"></i>
-                        <span class="link-title">master</span>
+                        <span class="link-title">Master Data</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
                     <div class="collapse {{ show_class(['master/*']) }}" id="master">
@@ -34,13 +34,34 @@
                                 <a href="{{ url('/master/client') }}"
                                     class="nav-link {{ active_class(['master/client']) }}">Client</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ url('/master/product') }}"
                                     class="nav-link {{ active_class(['master/product']) }}">Product</a>
+                            </li> --}}
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{ active_class(['transaction/*']) }}">
+                    <a class="nav-link" data-toggle="collapse" href="#transaction" role="button"
+                        aria-expanded="{{ is_active_route(['transaction/*']) }}" aria-controls="transaction">
+                        <i class="link-icon" data-feather="file-text"></i>
+                        <span class="link-title">Transaction</span>
+                        <i class="link-arrow" data-feather="chevron-down"></i>
+                    </a>
+                    <div class="collapse {{ show_class(['transaction/*']) }}" id="transaction">
+                        <ul class="nav sub-menu">
+                            <li class="nav-item">
+                                <a href="{{ url('/transaction/create') }}"
+                                    class="nav-link {{ active_class(['transaction/create']) }}">Create</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/transaction/all') }}"
+                                    class="nav-link {{ active_class(['transaction/all']) }}">All Transaction</a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
                 @if (env('APP_ENV') === 'local')
                     <li class="nav-item nav-category">web apps</li>
                     <li class="nav-item {{ active_class(['email/*']) }}">

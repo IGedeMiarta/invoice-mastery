@@ -1,6 +1,7 @@
 <?php
 
 use App\Order;
+use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Routing\Route;
 
@@ -60,28 +61,40 @@ function getMonthStartEndDates($monthOffset) {
     $endOfMonth = Carbon::now()->endOfMonth()->subMonths($monthOffset);
     return [$startOfMonth, $endOfMonth];
 }
+function trx()
+{
+    // Get the current year and month
+    $year = date('y');
+    $month = date('m');
+    
+    // Convert month number to Roman numeral
+    $romanMonth = convertToRoman($month);
+    
+    // Get the last order number from the database and add 100 to it
+    $lastOrder = (Transaction::count() + 1) + 100;
 
-// function trx()
-// {
-//     // Get the current date in the format 'yymmdd'
-//     $date = date('ymd');
+    // Construct the invoice number
+    $invoiceNumber = sprintf("%02d%03d/QNP-ACC/%s/%d", $year, $lastOrder, $romanMonth, date('Y'));
 
-//     // Get the last order record from the database
-//     $lastOrder = Order::latest()->first();
+    return $invoiceNumber;
+}
 
-//     // If there are no existing orders, set the order number to 1
-//     $orderNumber = 1;
+// Function to convert a number to Roman numeral
+function convertToRoman($num)
+{
+    $roman = '';
+    $lookup = [
+        'M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400,
+        'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40,
+        'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1
+    ];
 
-//     // If there are existing orders, increment the last order number by 1
-//     if ($lastOrder) {
-//         $orderNumber = $lastOrder->order_number + 1;
-//     }
+    foreach ($lookup as $symbol => $value) {
+        while ($num >= $value) {
+            $roman .= $symbol;
+            $num -= $value;
+        }
+    }
 
-//     // Format the order number with leading zeros if needed (assuming max 9999)
-//     $formattedOrderNumber = str_pad($orderNumber, 4, '0', STR_PAD_LEFT);
-
-//     // Concatenate the components to form the transaction number
-//     $transactionNumber = 'ORDR' . $date . $formattedOrderNumber;
-
-//     return $transactionNumber;
-// }
+    return $roman;
+}
