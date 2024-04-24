@@ -27,7 +27,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
-                                    <th>Price</th>
+                                    <th>Percent</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -37,12 +37,12 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ rp($item->price) }}</td>
+                                        <td>{{ $item->percent }}%</td>
                                         <td>{!! $item->status() !!}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning edit" data-toggle="modal"
                                                 data-target="#modalEdit" data-url="{{ route('product.update', $item->id) }}"
-                                                data-name="{{ $item->name }}" data-price="{{ $item->price }}"
+                                                data-name="{{ $item->name }}" data-percent="{{ $item->percent }}"
                                                 data-status="{{ $item->status }}">Edit</button>
                                         </td>
                                     </tr>
@@ -74,9 +74,9 @@
                                 placeholder="Bussiness Counsulting" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="price">Price<i class="text-danger">*</i></label>
-                            <input class="form-control mb-4 mb-md-0" id="price" autocomplete="off" name="price"
-                                placeholder="1,000,000" required data-inputmask="'alias': 'currency'" />
+                            <label for="percent">Percent (%)<i class="text-danger">*</i></label>
+                            <input type="number" class="form-control mb-4 mb-md-0" id="percent" name="percent"
+                                placeholder="10" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -108,9 +108,10 @@
                                 placeholder="Bussiness Counsulting" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="_price">Price<i class="text-danger">*</i></label>
-                            <input class="form-control mb-4 mb-md-0" id="_price" autocomplete="off" name="price"
-                                placeholder="1,000,000" required data-inputmask="'alias': 'currency'" />
+                            <label for="_percent">Percent (%)<i class="text-danger">*</i></label>
+                            <input type="number" class="form-control mb-4 mb-md-0" id="_percent" name="percent"
+                                placeholder="10" />
+
                         </div>
                         <div class="form-group">
                             <label for="_status">Status<i class="text-danger">*</i></label>
@@ -145,7 +146,7 @@
         $(document).ready(function() {
             $('.edit').on('click', function() {
                 $('#_name').val($(this).data('name'));
-                $('#_price').val($(this).data('price'));
+                $('#_percent').val($(this).data('percent'));
                 $('#_status').val($(this).data('status'));
                 $('#formEdit').attr('action', $(this).data('url'));
             })

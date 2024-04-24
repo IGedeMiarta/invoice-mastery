@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TransactionDetail extends Model
+class TransactionAdditional extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];

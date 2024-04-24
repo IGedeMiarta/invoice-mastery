@@ -34,10 +34,10 @@
                                 <a href="{{ url('/master/client') }}"
                                     class="nav-link {{ active_class(['master/client']) }}">Client</a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ url('/master/product') }}"
-                                    class="nav-link {{ active_class(['master/product']) }}">Product</a>
-                            </li> --}}
+                            <li class="nav-item">
+                                <a href="{{ url('/master/service') }}"
+                                    class="nav-link {{ active_class(['master/service']) }}">Service</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -56,7 +56,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('/transaction/all') }}"
-                                    class="nav-link {{ active_class(['transaction/all']) }}">All Transaction</a>
+                                    class="nav-link {{ active_class(['transaction/all']) }}">All</a>
                             </li>
                         </ul>
                     </div>

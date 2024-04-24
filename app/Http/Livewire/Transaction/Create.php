@@ -4,6 +4,9 @@ namespace App\Http\Livewire\Transaction;
 
 use App\Client;
 use App\Product;
+use App\Transaction;
+use App\TransactionAdditional;
+use App\TransactionDetail;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -12,12 +15,10 @@ class Create extends Component
     public $client,$due_date;
     public $client_id;
     public $allProduct;
-    public $product_id;
-    public $jml;
-    public $notes;
-    public $total = 0;
-    public $desain_front;
-    public $desain_back;
+    public $service;
+    public $product;
+    public $price_amount;
+    public $total;
     public $order_notes;
     public $dp_amount;
     public $disc_name;
@@ -27,40 +28,107 @@ class Create extends Component
     public $charge_percent;
     public $charge_amount;
     public $fin_amount;
+    public $subtotal;
     public $allType;
     public $trx;
-    
+    public $add_name;
+    public $add_prercent;
+    public $additionalTable = [];
+    public $notes;
+    public $desc;
+    public $total_due;
+
+    protected $rules = [
+        'service' => 'required',
+        'price_amount' => 'required',
+    ];
 
     public $table = [];
     public function mount(){
         $this->client = Client::all();
-        $this->allProduct = Product::all();
         $this->trx = trx();
-        // $this->allType = ProductType::all();
+        $this->allProduct = Product::all();
     }
+    
     public function addProduk()
     {
-        // Validate input data if needed
+
+        $this->validate();
+
         $no = count($this->table) +1;
-        $product = Product::find($this->product_id);
+        $product = Product::find($this->service);
+
         $this->table[] = [
             'no'        => $no,
-            'produk_id' => $this->product_id,
-            'produk_name' => $product->name,
-            'size'         => strtoupper($product->size),
-            'color'         => $product->color,
-            'produk_jml' => $this->jml,
-            'produk_price' => num($product->harga_jual),
-            'total'         => num($this->jml * $product->harga_jual),
-            'produk_notes' => $this->notes,
+            'product' => $product->name,
+            'product_id' => $this->service,
+            'percent'   => $product->percent,
+            'price' => $this->price_amount,
+            'amount' => num((getAmount($this->price_amount) * $product->percent) / 100)
         ];
         $this->total =  $this->getTotalAmount();
-        
-        $this->product_id = null;
-        $this->jml = null;
-        $this->notes = null;
         $this->fin_amount = $this->getFinAmount();
+        $this->subtotal = num($this->subTotal());
+        $this->product = null;
+        $this->price_amount = null;
+        $this->service = null;
     }
+
+    public function addAditional(){
+        $this->additionalTable[] =[
+            'name' => $this->add_name,
+            'percent'=> $this->add_prercent.'%',
+            'amount' => num($this->subTotal() * $this->add_prercent / 100)
+        ];
+        $this->subtotal = num($this->subTotal());
+        $this->add_name = null;
+        $this->add_prercent = null;
+        $this->total_due = num($this->getTotalDue());
+    }
+    public function subTotal(){
+        return bulatkan($this->getTotalAmount());
+    }
+
+    public function submitOrder(){
+        $client   = $this->client_id;
+        $desc     = $this->desc;
+        DB::beginTransaction();
+        try {
+            $trx = new Transaction();
+            $trx->trx       = $this->trx;
+            $trx->client_id = $client;
+            $trx->desc      = $desc;
+            $trx->total     = $this->getFinAmount();
+            $trx->sub_total = $this->subTotal();
+            $trx->due_total = $this->getTotalDue();
+            $trx->save();
+
+            foreach ($this->table as $item) {
+                $detail = new TransactionDetail();
+                $detail->trx_id = $trx->id;
+                $detail->product_id = $item['product_id'];
+                $detail->price      = getAmount($item['price']);
+                $detail->amount      = getAmount($item['amount']);
+                $detail->save();
+            }
+            foreach ($this->additionalTable as $val) {
+                $add = new TransactionAdditional();
+                $add->trx_id = $trx->id;
+                $add->name = $val['name'];
+                $add->percent = getAmount($val['percent']);
+                $add->total = getAmount($val['amount']);
+                $add->save();
+            }
+
+            DB::commit();
+            return redirect()->route('product')->with('success','Order Create');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+            $this->emit('error',$th->getMessage());
+        }
+    }
+
     // public function submitOrder(){
     //     $client = $this->client_id;
     //     $trx = trx(); 
@@ -135,38 +203,43 @@ class Create extends Component
     //     }
 
     // }
-    public function setProductId($id){
-        $this->product_id = $id;
+    public function getTotalDue(){
+        $totalDue = 0;
+        foreach ($this->additionalTable as $item) {
+            $totalDue += getAmount($item['amount']??0);
+        }
+        
+        return $totalDue + $this->subtotal();
     }
     public function getTotalAmount()
     {
         $totalAmount = 0;
         foreach ($this->table as $item) {
-            $totalAmount += getAmount($item['total']??0);
+            $totalAmount += getAmount($item['amount']??0);
         }
         
         return $totalAmount;
     }
     public function getFinAmount(){
         $total = $this->getTotalAmount();
-        //cek diskon %;
-        if($this->disc_percent != 0||$this->disc_percent != null){
-            $disc_percen = $total * $this->disc_percent/100;
-        }else{
-            $disc_percen = 0;
-        }
-        // total dikurangi diskon;
-        $total -= $disc_percen;
-        $total -= getAmount($this->disc_amount);
+        // //cek diskon %;
+        // if($this->disc_percent != 0||$this->disc_percent != null){
+        //     $disc_percen = $total * $this->disc_percent/100;
+        // }else{
+        //     $disc_percen = 0;
+        // }
+        // // total dikurangi diskon;
+        // $total -= $disc_percen;
+        // $total -= getAmount($this->disc_amount);
 
-        if($this->charge_percent != 0 || $this->charge_percent != null){
-            $charge_percent = $total * $this->charge_percent/100;
-        }else{
-            $charge_percent = 0;
-        }
+        // if($this->charge_percent != 0 || $this->charge_percent != null){
+        //     $charge_percent = $total * $this->charge_percent/100;
+        // }else{
+        //     $charge_percent = 0;
+        // }
 
-        $total += $charge_percent;
-        $total += getAmount($this->charge_amount);
+        // $total += $charge_percent;
+        // $total += getAmount($this->charge_amount);
 
         return $total;
 
@@ -182,8 +255,21 @@ class Create extends Component
         unset($this->table[$index]);
         $this->total =  $this->getTotalAmount();
     }
+    public function deleteAdditional($index){
+        unset($this->additionalTable[$index]);
+        $this->total =  $this->getTotalAmount();
+    }
+    public function refresh($index){
+        $this->additionalTable[$index] =[
+            'name' => $this->additionalTable[$index]['name'],
+            'percent'=> $this->additionalTable[$index]['percent'],
+            'amount' =>  num($this->subtotal() * getAmount($this->additionalTable[$index]['percent']) / 100)
+        ];
+        $this->total_due =  num($this->getTotalDue());
+    }
 
     protected $listeners = ['reloadClient','reloadProduk'];
+
     public function reloadClient()
     {
         $client = Client::orderByDesc('id')->first();
@@ -194,7 +280,6 @@ class Create extends Component
     public function reloadProduk(){
         $this->mount();
         $this->render();
-        $this->allProduct = Product::all();
         $this->emit('success');
     }
 

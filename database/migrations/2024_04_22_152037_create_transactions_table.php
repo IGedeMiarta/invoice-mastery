@@ -15,6 +15,12 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('trx');
+            $table->unsignedInteger('client_id');
+            $table->string('desc');
+            $table->float('total',15,2);
+            $table->float('sub_total',15,2);
+            $table->float('due_total',15,2);
             $table->timestamps();
         });
     }

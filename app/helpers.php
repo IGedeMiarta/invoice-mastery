@@ -45,11 +45,15 @@ function getAmount($num) {
     
     return $amount;
 }
+function bulatkan($number) {
+    // Pembulatan ke bawah jika sisa kurang dari 500, atau ke atas jika lebih dari 500
+    return round($number / 1000) * 1000;
+}
 function rp($num){
-  return 'Rp '.number_format($num,2,'.',',');
+  return 'Rp '.number_format($num,0,'.',',');
 }
 function num($num){
-  return number_format($num,2,'.',',');
+  return number_format($num,0,'.',',');
 }
 function dateFormat($d){
   return date('d M Y',strtotime($d));
@@ -98,3 +102,16 @@ function convertToRoman($num)
 
     return $roman;
 }
+
+function cutStr($string, $length = 50) {
+    // Check if the length of the string is greater than the specified length
+    if (strlen($string) > $length) {
+        // Truncate the string to the specified length
+        $string = substr($string, 0, $length);
+        // Append "..." to indicate that the string has been truncated
+        $string .= "...";
+    }
+    // Return the truncated string
+    return $string;
+}
+

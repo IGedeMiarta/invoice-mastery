@@ -26,9 +26,10 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Company</th>
                                     <th>Name</th>
+                                    <th>Position</th>
                                     <th>Address</th>
-                                    <th>Phone</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -36,14 +37,16 @@
                                 @foreach ($table as $item)
                                     <tr>
                                         <td>1</td>
+                                        <td>{{ $item->company_name }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->address }}</td>
-                                        <td>{{ $item->phone }}</td>
+                                        <td>{{ $item->position }}</td>
+                                        <td>{{ $item->company_address }}</td>
                                         <td>
                                             <button class="btn btn-warning btnEdit" data-toggle="modal"
                                                 data-target="#modalEdit" data-url="{{ route('client.update', $item->id) }}"
-                                                data-name="{{ $item->name }}" data-address="{{ $item->address }}"
-                                                data-phone="{{ $item->phone }}">Edit</button>
+                                                data-company_name="{{ $item->company_name }}"
+                                                data-name="{{ $item->name }}" data-position="{{ $item->position }}"
+                                                data-company_address="{{ $item->company_address }}">Edit</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -69,19 +72,24 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name">Name<i class="text-danger">*</i></label>
+                            <label for="company_name">Company Name<i class="text-danger">*</i></label>
+                            <input type="text" class="form-control" id="company_name" autocomplete="off"
+                                placeholder="PT. MAZEA" name="company_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Dir Name<i class="text-danger">*</i></label>
                             <input type="text" class="form-control" id="name" autocomplete="off"
-                                placeholder="PT. MAZEA" name="name" required>
+                                placeholder="Mrs. Imelda Adhi Saputra" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Dir Position<i class="text-danger">*</i></label>
+                            <input type="text" class="form-control" id="position" autocomplete="off"
+                                placeholder="Direktur Utama" name="position" required>
                         </div>
                         <div class="form-group">
                             <label for="address">Address<i class="text-danger">*</i></label>
-                            <textarea name="address" id="address" cols="30" rows="5" class="form-control"
+                            <textarea name="company_address" id="address" cols="30" rows="5" class="form-control"
                                 placeholder="Kec. Kasihan, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55184" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input class="form-control mb-4 mb-md-0" name="phone"
-                                data-inputmask-alias="(+62)999 9999 9999" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -108,19 +116,24 @@
                     @method('PUT')
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="_name">Name<i class="text-danger">*</i></label>
+                            <label for="_company_name">Company Name<i class="text-danger">*</i></label>
+                            <input type="text" class="form-control" id="_company_name" autocomplete="off"
+                                placeholder="PT. MAZEA" name="company_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="_name">Dir Name<i class="text-danger">*</i></label>
                             <input type="text" class="form-control" id="_name" autocomplete="off"
-                                placeholder="PT. MAZEA" name="name" required>
+                                placeholder="Mrs. Imelda Adhi Saputra" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="_address">Address<i class="text-danger">*</i></label>
-                            <textarea name="address" id="_address" cols="30" rows="5" class="form-control"
+                            <label for="_position">Dir Position<i class="text-danger">*</i></label>
+                            <input type="text" class="form-control" id="_position" autocomplete="off"
+                                placeholder="Direktur Utama" name="position" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="_company_address">Address<i class="text-danger">*</i></label>
+                            <textarea name="company_address" id="_company_address" cols="30" rows="5" class="form-control"
                                 placeholder="Kec. Kasihan, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55184" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="_phone">Phone</label>
-                            <input class="form-control mb-4 mb-md-0" name="phone" id="_phone"
-                                data-inputmask-alias="(+62)999 9999 9999" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -146,9 +159,10 @@
     <script>
         $(document).ready(function() {
             $('.btnEdit').on('click', function() {
+                $('#_company_name').val($(this).data('company_name'));
                 $('#_name').val($(this).data('name'));
-                $('#_address').val($(this).data('address'));
-                $('#_phone').val($(this).data('phone'));
+                $('#_company_address').val($(this).data('company_address'));
+                $('#_position').val($(this).data('position'));
                 $('#formEdit').attr('action', $(this).data('url'));
             });
         })

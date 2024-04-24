@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
    public function index(){
-        $data['title'] = 'Product';
+        $data['title'] = 'Service';
         $data['table'] = Product::latest()->get();
         return view('admin.product',$data);
     }
@@ -19,7 +19,7 @@ class ProductController extends Controller
         try {
             $product = new Product();
             $product->name = $request->name;
-            $product->price = getAmount($request->price);
+            $product->percent = ($request->percent);
             $product->save();
             DB::commit();
             return redirect()->back()->with('success','New Product Save!');                      
@@ -33,7 +33,7 @@ class ProductController extends Controller
        try {
             $product = Product::find($id);
             $product->name = $request->name;
-            $product->price = getAmount($request->price);
+            $product->percent = ($request->percent);
             $product->status = $request->status;
             $product->save();
             DB::commit();

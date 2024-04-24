@@ -1,0 +1,70 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif; /* Added Roboto font */
+    margin: 0;
+    padding: 0;
+}
+
+
+.invoice {
+    max-width: 795px; /* Sesuaikan dengan lebar kertas A4 */
+    margin: 20px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    /* border-radius: 10px; */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+.header img{
+    width: 72px;
+    height: 56px;
+    opacity: 0px;
+}
+.header h1{
+    font-size: 30px;
+    color: #F2CEC2;
+    font-weight: bolder;
+}
+.companyInfo {
+    margin-top: -25px;
+    width: 280px; /* Atur jarak kanan */
+}
+.companyInfo h5 {
+    margin-bottom: 5px; /* Atur jarak bawah h5 */
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.companyInfo p {
+    margin-top: 5px; /* Atur jarak atas p */
+    font-size: 15px;
+    font-weight: 400;
+    color: #2B2C2E;
+}
+
+
+.details {
+    margin-top: 20px;
+}
+
+.client-info h2, .items h2 {
+    margin-bottom: 10px;
+}
+
+.items ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.items ul li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.total {
+    margin-top: 20px;
+    text-align: right;
+}

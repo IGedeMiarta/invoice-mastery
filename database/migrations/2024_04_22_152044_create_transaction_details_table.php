@@ -15,6 +15,10 @@ class CreateTransactionDetailsTable extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('trx_id');
+            $table->unsignedBigInteger('product_id');
+            $table->float('price',15,2);
+            $table->float('amount',15,2);
             $table->timestamps();
         });
     }

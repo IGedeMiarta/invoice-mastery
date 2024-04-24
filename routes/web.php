@@ -13,34 +13,32 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TranactionController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 
 Route::get('/', function () {
     $data['title'] = 'Dashboard';
     return view('dashboard',$data);
+});
+Route::get('/invoice',function(){
+    return view('print.invoice');
 });
 
 Route::prefix('master')->group(function () {
     Route::get('client',[ClientController::class,'index']);
     Route::post('client',[ClientController::class,'post'])->name('client.post');
     Route::put('client/{id}',[ClientController::class,'update'])->name('client.update');
-    Route::get('product',[ProductController::class,'index']);
+    Route::get('service',[ProductController::class,'index'])->name('product');
     Route::post('product',[ProductController::class,'post'])->name('product.post');
     Route::put('product/{id}',[ProductController::class,'update'])->name('product.update');
     Route::delete('product/{id}',[ProductController::class,'delete'])->name('product.delete');
 
 });
 
-Route::get('transaction/create',function(){
-    $data['title'] = 'Transaction';
-    return view('admin.transaction',$data);
-});
-Route::get('transaction/all',function(){
-    $data['title'] = 'Transaction';
-    return view('admin.transaction',$data);
-});
+Route::get('transaction/create',[TranactionController::class,'index']);
+Route::get('transaction/all',[TranactionController::class,'all']);
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
