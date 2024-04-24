@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 Route::get('/', function () {
-    return view('dashboard');
+    $data['title'] = 'Dashboard';
+    return view('dashboard',$data);
 });
 
 Route::prefix('master')->group(function () {
