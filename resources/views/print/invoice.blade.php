@@ -445,6 +445,12 @@
             body {
                 -webkit-print-color-adjust: exact;
             }
+
+            .url-bar,
+            .title,
+            .date {
+                display: none !important;
+            }
         }
     </style>
     <style>
