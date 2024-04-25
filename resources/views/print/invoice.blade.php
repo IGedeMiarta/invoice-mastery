@@ -446,10 +446,14 @@
                 -webkit-print-color-adjust: exact;
             }
 
-            .url-bar,
-            .title,
-            .date {
-                display: none !important;
+            @page {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            body {
+                padding-top: 72px;
+                padding-bottom: 72px;
             }
         }
     </style>
@@ -492,7 +496,7 @@
 
 <body>
     <div style="width: 201mm; margin: 20px auto" id="buttonView">
-        <div style="display: flex; justify-content: end; margin-top: 5px;   ">
+        <div style="display: flex; justify-content: end; margin-top: 2px;   ">
             <button class="btn-primary" onclick="printContent()">
                 <i class="fas fa-print"></i>
                 Print
@@ -654,7 +658,7 @@
             </div>
         </div>
         <div class="invoice">
-            <div class="header">
+            <div class="header" style="margin-top: 80px">
                 <img src="{{ asset('logo.png') }}" alt="">
 
             </div>
