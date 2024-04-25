@@ -526,11 +526,13 @@
                 <div class="invoiceTo">
                     <h5 class="invText">INVOICE TO</h5>
                     <div class="invx">
-                        <h5>{{ $trx->getClient->company_name ?? '-' }}</h5>
-                        <h6>{{ $trx->getClient->name ?? '-' }}</h6>
-                        <h6>{{ $trx->getClient->position ?? '-' }}</h6>
+                        <h5>PT. SEMESTA ALAM BARITO</h5>
+                        <h6>Mrs. Imelda Adhi Saputra</h6>
+                        <h6>Direktur Utama</h6>
                         <p>
-                            {{ $trx->getClient->company_address ?? '-' }}
+                            Jalan Sultan Agung Blok C-D No.63
+                            Setiabudi, Jakarta Selatan
+                            12970
                         </p>
                     </div>
                 </div>
@@ -538,7 +540,10 @@
                     <h5 class="invText">Description</h5>
                     <div class="invx">
                         <p>
-                            {{ $trx->desc }}
+                            Tax service: Agreement of Retainer Tax Advisory Services for the Tax Period January 2024 -
+                            March
+                            2024
+                            Kontrak No. EL-002/QNPIII/2024
                         </p>
                     </div>
                 </div>
@@ -550,15 +555,15 @@
                         <tr>
                             <th>
                                 <span class="text"> <i class="fas fa-dollar-sign"></i> Total Due</span> <br>
-                                <span class="info">{{ num($trx->due_total) }}</span>
+                                <span class="info"> 1.123.899.000</span>
                             </th>
                             <th>
                                 <span class="text"> <i class="far fa-calendar-alt"></i> Invoice Date</span> <br>
-                                <span class="info"> {{ df($trx->created_at) }}</span>
+                                <span class="info"> 23 Apr 2024</span>
                             </th>
                             <th>
                                 <span class="text"> <i class="fas fa-barcode"></i> Invoice #</span> <br>
-                                <span class="info"> {{ $trx->trx }}</span>
+                                <span class="info"> 24102/QNP-ACC/IV/2024</span>
                             </th>
                         </tr>
                     </thead>
@@ -567,11 +572,11 @@
                             <td></td>
                             <td>
                                 <span class="text"> Amount </span> <br>
-                                <span class="info">{{ num($trx->sub_total) }}</span>
+                                <span class="info">1.031.100.000</span>
                             </td>
                             <td>
                                 <span class="text">Total (Rp) </span><br>
-                                <span class="info">{{ num($trx->sub_total) }}</span>
+                                <span class="info"> 1.031.100.000</span>
                             </td>
                         </tr>
                         <tr>
@@ -590,20 +595,27 @@
                                 <span class="text">SUB TOTAL : </span>
                             </td>
                             <td>
-                                <span class="info">{{ num($trx->sub_total) }}</span>
+                                <span class="info"> 1.031.100.000</span>
                             </td>
                         </tr>
-                        @foreach ($trx->getAdditional as $item)
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <span class="text">{{ $item->name }} {{ $item->percent }}%</span>
-                                </td>
-                                <td>
-                                    <span class="info">{{ num($item->total) }}</span>
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tr>
+                            <td></td>
+                            <td>
+                                <span class="text">VAT 11% :</span>
+                            </td>
+                            <td>
+                                <span class="info"> 1.031.100.000</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <span class="text">Art 23 Income Tax 2% :</span>
+                            </td>
+                            <td>
+                                <span class="info"> 1.031.100.000</span>
+                            </td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr class="bg-orange">
@@ -612,7 +624,7 @@
                                 <span class="text">Total Due :</span>
                             </td>
                             <td>
-                                <span class="info">{{ num($trx->due_total) }}</span>
+                                <span class="info"> 1.031.100.000</span>
                             </td>
                         </tr>
                     </tfoot>
@@ -679,11 +691,11 @@
                     <tbody>
                         <tr>
                             <td>Lampiran Invoice No :</td>
-                            <td>{{ $trx->trx }}</td>
+                            <td>24101/QNP-ACC/IV/2024</td>
                         </tr>
                         <tr>
                             <td>Date :</td>
-                            <td>{{ df($trx->created_at) }}</td>
+                            <td>23-Apr-24</td>
                         </tr>
                     </tbody>
                 </table>
@@ -699,31 +711,45 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="4">{{ $trx->desc }}</td>
+                            <td colspan="4">TAX Services : Tax audit Assistance of Corporate Income Tax for the Fical
+                                Year 2019</td>
                             <td colspan="2"></td>
                         </tr>
-                        @foreach ($trx->getDetails as $item)
-                            <tr>
-                                <td>{{ $item->id }}</td>
-                                <td>{{ $item->getProduct->name }}</td>
-                                <td>{{ $item->getProduct->percent }}%</td>
-                                <td>{{ num($item->price) }}</td>
-                                <td class="text-end text-warning" colspan="2">{{ num($item->amount) }}</td>
-                            </tr>
-                        @endforeach
-
+                        <tr>
+                            <td>1</td>
+                            <td>PPh Pasal 26</td>
+                            <td>10%</td>
+                            <td>23.775.955.165</td>
+                            <td class="text-end text-warning" colspan="2">2.377.595.517</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>PPh Pasal 26</td>
+                            <td>10%</td>
+                            <td>23.775.955.165</td>
+                            <td class="text-end text-warning" colspan="2">2.377.595.517</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>PPh Pasal 26</td>
+                            <td>10%</td>
+                            <td>23.775.955.165</td>
+                            <td class="text-end text-warning" colspan="2">2.377.595.517</td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="4"></td>
                             <td class="bg-warning total-label">TOTAL :</td>
-                            <td class="bg-warning total-value">{{ num($trx->total) }}</td>
+                            <td class="bg-warning total-value">3.395.965.217</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
             <div class="terbilang">
-                {{ terbilang($trx->total) }} Rupiah
+                Tiga Milyar Tiga Ratus Sembilan Puluh Lima Juta Sembilan Ratus Enam Puluh Lima Ribu Dua Ratus Tujuh
+                Belas
+                Rupiah
             </div>
         </div>
     </div>

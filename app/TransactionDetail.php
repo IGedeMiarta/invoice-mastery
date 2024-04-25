@@ -9,5 +9,8 @@ class TransactionDetail extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    public function getProduct(){
+        return $this->belongsTo(Product::class,'product_id');
+    }
 
 }

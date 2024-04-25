@@ -12,4 +12,11 @@ class Transaction extends Model
     public function getClient(){
         return $this->belongsTo(Client::class,'client_id');
     }
+    public function getAdditional(){
+        return $this->hasMany(TransactionAdditional::class,'trx_id','id');
+    }
+    public function getDetails(){
+        return $this->hasMany(TransactionDetail::class,'trx_id','id');
+
+    }
 }

@@ -122,3 +122,36 @@ function Base64($image_path){
     // Output the Base64-encoded string
     return $base64_image;
 }
+
+function terbilang($angka) {
+    $bilangan = [
+        '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan'
+    ];
+
+    $temp = '';
+    if ($angka < 10) {
+        $temp = $bilangan[$angka];
+    } elseif ($angka < 20) {
+        $temp = terbilang($angka - 10) . ' Belas';
+    } elseif ($angka < 100) {
+        $temp = terbilang($angka / 10) . ' Puluh ' . terbilang($angka % 10);
+    } elseif ($angka < 200) {
+        $temp = 'Seratus ' . terbilang($angka - 100);
+    } elseif ($angka < 1000) {
+        $temp = terbilang($angka / 100) . ' Ratus ' . terbilang($angka % 100);
+    } elseif ($angka < 2000) {
+        $temp = 'Seribu ' . terbilang($angka - 1000);
+    } elseif ($angka < 1000000) {
+        $temp = terbilang($angka / 1000) . ' Ribu ' . terbilang($angka % 1000);
+    } elseif ($angka < 1000000000) {
+        $temp = terbilang($angka / 1000000) . ' Juta ' . terbilang($angka % 1000000);
+    } elseif ($angka < 1000000000000) {
+        $temp = terbilang($angka / 1000000000) . ' Milyar ' . terbilang($angka % 1000000000);
+    }
+
+    return $temp;
+}
+
+function df($time){
+    return date('d M Y',strtotime($time));
+}
