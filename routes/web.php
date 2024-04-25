@@ -39,8 +39,8 @@ Route::prefix('master')->group(function () {
 
 });
 
-Route::get('transaction/create',[TranactionController::class,'index']);
-Route::get('transaction/all',[TranactionController::class,'all']);
+Route::get('transaction/create',[TranactionController::class,'index'])->name('transaction.create');
+Route::get('transaction/all',[TranactionController::class,'all'])->name('transaction.all');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

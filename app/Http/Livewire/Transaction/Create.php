@@ -121,7 +121,7 @@ class Create extends Component
             }
 
             DB::commit();
-            return redirect()->route('product')->with('success','Order Create');
+            return redirect()->route('transaction.all')->with('success','Order Create');
         } catch (\Throwable $th) {
             DB::rollBack();
             dd($th->getMessage());
