@@ -5,9 +5,438 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? '' }}</title>
-    <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/invoice.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('css/fontawsome/css/all.min.css') }}">
     <link rel="shortcut icon" href="{{ asset('logo.png') }}">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            /* Added Roboto font */
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .invoice {
+            max-width: 795px;
+            /* Sesuaikan dengan lebar kertas A4 */
+            margin: 20px auto;
+            padding: 40px;
+            /* border: 2px solid #ccc;  */
+            height: 1123px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .header img {
+            width: 72px;
+            height: 56px;
+            opacity: 0px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            color: #F2CEC2;
+            font-weight: bolder;
+        }
+
+        .companyInfo {
+            margin-top: -25px;
+            width: 280px;
+            /* Atur jarak kanan */
+        }
+
+        .companyInfo h5 {
+            margin-bottom: 5px;
+            /* Atur jarak bawah h5 */
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .companyInfo p {
+            margin-top: 5px;
+            /* Atur jarak atas p */
+            font-size: 12px;
+            font-weight: 400;
+            color: #2B2C2E;
+        }
+
+        .circle {
+            display: inline-block;
+            width: 30px;
+            /* Adjust the size of the circle */
+            height: 30px;
+            /* Adjust the size of the circle */
+            background-color: rgba(222, 65, 15, 0.2);
+            /* Set opacity here */
+            border-radius: 50%;
+            /* Makes it a circle */
+            text-align: center;
+            line-height: 30px;
+            /* Center the icon vertically */
+        }
+
+        .circle i {
+            color: #772D2F;
+        }
+
+        .companySocial {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .companyMail {
+            font-size: 13px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .invText {
+            font-size: 16px;
+            color: #772D2F;
+        }
+
+        .invx {
+            margin-top: -25px;
+            width: 280px;
+            /* Atur jarak kanan */
+        }
+
+        .invx h5 {
+            margin-bottom: 5px;
+            /* Atur jarak bawah h5 */
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .invx h6 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            /* Atur jarak bawah h5 */
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .invx p {
+            margin-top: 5px;
+            /* Atur jarak atas p */
+            font-size: 12px;
+            font-weight: 400;
+            color: #2B2C2E;
+        }
+
+        .desc {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .description .invText {
+            text-align: end;
+        }
+
+        .description {
+            text-align: justify;
+        }
+
+        .tableInfo {
+            display: flex;
+            justify-content: end;
+            margin-top: 50px;
+        }
+
+        .table {
+            width: 75%;
+            border-collapse: collapse;
+        }
+
+        .table thead th {
+            padding: 0.75rem;
+            vertical-align: top;
+            border: 3px solid white;
+            /* Set border color of cells to white and increase width */
+        }
+
+        .table tbody td {
+            padding: 0.1rem;
+            padding-right: 8px;
+            vertical-align: top;
+            border: 3px solid white;
+            /* Set border color of cells to white and increase width */
+        }
+
+        .table tfoot td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 8px;
+            vertical-align: top;
+        }
+
+        .table thead td {
+            text-align: center;
+            /* Center align the text in the <thead> */
+            vertical-align: bottom;
+            border-bottom: 3px solid white;
+            /* Set header bottom border color to white and increase width */
+        }
+
+        .table tbody+tbody {
+            border-top: 3px solid white;
+            /* Set border between table body sections to white and increase width */
+        }
+
+        .table thead {
+            background-color: rgba(222, 65, 15, 0.2);
+            /* Set opacity here */
+        }
+
+        .table thead .text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .table thead .info {
+            font-size: 14px;
+            color: #772D2F;
+            font-weight: bold;
+
+        }
+
+        .table tbody td {
+            text-align: right;
+            /* Align text to the right inside tbody cells */
+        }
+
+        .table tbody .text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .table tbody .info {
+            font-size: 14px;
+            color: #772D2F;
+            font-weight: bold;
+        }
+
+        .table tbody tr {
+            padding-top: 5px;
+            /* Adjust the top padding */
+            padding-bottom: 5px;
+            /* Adjust the bottom padding */
+        }
+
+        .table tfoot tr {
+            text-align: right;
+            /* Align text to the right inside tbody cells */
+            padding-top: 5px;
+            /* Adjust the top padding */
+            padding-bottom: 5px;
+            /* Adjust the bottom padding */
+        }
+
+        .bg-orange {
+            background-color: #DE410F;
+            color: white;
+        }
+
+        .table tfoot {
+            border: none;
+            /* Remove border for all but the last row in the tfoot */
+        }
+
+        .notes {
+            margin-top: 50px;
+        }
+
+        .notes .text {
+            font-size: 16px;
+            color: #772D2F;
+        }
+
+        .textx {
+            margin-top: -25px;
+            width: 480px;
+            /* Atur jarak kanan */
+        }
+
+        .textx h5 {
+            margin-bottom: 5px;
+            /* Atur jarak bawah h5 */
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .textx h6 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            /* Atur jarak bawah h5 */
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .textx p {
+            margin-top: 5px;
+            /* Atur jarak atas p */
+            font-size: 12px;
+            font-weight: 400;
+            color: #2B2C2E;
+        }
+
+        .ttd-text h5 {
+            font-size: 14px;
+            text-decoration: underline;
+        }
+
+        .ttd-text p {
+            font-size: 12px;
+            margin-top: -15px;
+        }
+
+        .ttd-text {
+            text-align: center;
+        }
+
+        .line hr {
+            border: none;
+            /* Remove the default border */
+            background-color: #DE410F;
+            /* Set the background color to blue */
+            height: 4px;
+            /* Increase the height of the line */
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .lampiranInf {
+            margin-top: 30px;
+            display: flex;
+            justify-content: end;
+        }
+
+        .tbLampiran td {
+            text-align: end;
+            /* Align text to the end (right side) */
+        }
+
+        .tableInfoDetail {
+            margin-top: 30px;
+        }
+
+        .tbInfo {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tbInfo thead td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border: 3px solid white;
+            /* Set border color of cells to white and increase width */
+        }
+
+        .tbInfo tbody td {
+            padding: 0.3rem;
+            padding-right: 8px;
+            vertical-align: top;
+            border: 3px solid white;
+            /* Set border color of cells to white and increase width */
+        }
+
+        .tbLampiran tbody td {
+            padding: 0.1rem;
+            padding-right: 8px;
+            vertical-align: top;
+            border: 3px solid white;
+            /* Set border color of cells to white and increase width */
+        }
+
+        .tbInfo tfoot td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 8px;
+            vertical-align: top;
+        }
+
+        .tbInfo thead td {
+            text-align: center;
+            /* Center align the text in the <thead> */
+            vertical-align: bottom;
+            border-bottom: 3px solid white;
+            /* Set header bottom border color to white and increase width */
+        }
+
+        .tbInfo tbody td {
+
+            vertical-align: bottom;
+            border-bottom: 3px solid white;
+            /* Set header bottom border color to white and increase width */
+            line-height: 1.5;
+        }
+
+        .tbInfo tbody+tbody {
+            border-top: 3px solid white;
+            /* Set border between tbInfo body sections to white and increase width */
+
+        }
+
+        .tbInfo thead {
+            background-color: rgba(222, 65, 15, 0.2);
+            /* Set opacity here */
+        }
+
+        .tbInfo thead .text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .tbInfo thead .info {
+            font-size: 14px;
+            color: #772D2F;
+            font-weight: bold;
+
+        }
+
+        .tbInfo .description {
+            width: 55%;
+        }
+
+        .text-end {
+            text-align: end;
+        }
+
+        .text-warning {
+            color: #772D2F;
+        }
+
+        .tbInfo tfoot td {
+            text-align: end;
+        }
+
+        .total-label,
+        .total-value {
+            color: white;
+            /* Change the color to whatever you desire */
+        }
+
+        .bg-warning {
+            background-color: #DE410F;
+            /* Adjust background color for emphasis */
+        }
+
+        .terbilang {
+            border: 2px solid #000;
+            /* Border style, adjust color and thickness as needed */
+            padding: 15px;
+            /* Padding to add space around text */
+            width: 60%;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 
 <body>
