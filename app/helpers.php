@@ -115,3 +115,10 @@ function cutStr($string, $length = 50) {
     return $string;
 }
 
+function Base64($image_path){
+    // Read the image file and encode it to Base64
+    $base64_image = base64_encode(file_get_contents($image_path));
+
+    // Output the Base64-encoded string
+    return $base64_image;
+}

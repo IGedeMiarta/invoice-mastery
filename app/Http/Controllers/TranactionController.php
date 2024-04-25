@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
-
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
 class TranactionController extends Controller
 {
     public function index(){
@@ -24,5 +24,14 @@ class TranactionController extends Controller
         $data['trx'] = Transaction::find($id);
         $data['title'] = 'INV: '. $data['trx']->trx;
         return view('print.invoice',$data);
+        // $dompdf = new Dompdf();
+        // $dompdf->loadHtml(view('print.invoice',$data)->render());
+        // $dompdf->render();
+        // return $dompdf->stream('document.pdf');
+        // $pdf = PDF::loadview('print.invoice',$data)->setPaper('A4','potrait');
+        //     return $pdf->stream();
+
+        // $pdf = Pdf::loadView('print.invoice', $data);
+        // return $pdf->download('invoice.pdf');
     }
 }

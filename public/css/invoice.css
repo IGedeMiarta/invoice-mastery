@@ -9,7 +9,7 @@ body {
     max-width: 795px; /* Sesuaikan dengan lebar kertas A4 */
     margin: 20px auto;
     padding: 40px;
-    border: 2px solid #ccc; /* Ketebalan border */
+    /* border: 2px solid #ccc;  */
        height: 1123px; 
 }
 

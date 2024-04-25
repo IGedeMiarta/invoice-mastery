@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? '' }}</title>
     <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawsome/css/all.min.css') }}">
     <link rel="shortcut icon" href="{{ asset('logo.png') }}">
 </head>
 
 <body>
     <div class="invoice">
 
-
         <div class="header">
-            <img src="{{ asset('logo.png') }}" alt="">
+            <img src="{{ public_path() . '/logo.png' }}" alt="">
             <h1>INVOICE</h1>
         </div>
         <div style="display: flex; justify-content: space-between">
