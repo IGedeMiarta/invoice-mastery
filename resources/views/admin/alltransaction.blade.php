@@ -63,10 +63,10 @@
                                                     <li class="list-group-item list-group-item-info"> <i
                                                             class="mdi mdi-file-document"></i> Detail</li>
                                                 </a>
-                                                <a href="#2">
+                                                {{-- <a href="#2">
                                                     <li class="list-group-item list-group-item-danger"> <i
                                                             class="mdi mdi-file-pdf"></i> Print</li>
-                                                </a>
+                                                </a> --}}
                                             </ul>
                                         </td>
                                     </tr>
