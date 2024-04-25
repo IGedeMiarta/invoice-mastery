@@ -22,9 +22,11 @@ Route::get('/', function () {
     $data['title'] = 'Dashboard';
     return view('dashboard',$data);
 });
-Route::get('/invoice',function(){
-    return view('print.invoice');
-});
+
+Route::get('print/{id}',[TranactionController::class,'inv'])->name('inv');
+// Route::get('/invoice',function(){
+//     return view('print.invoice');
+// });
 
 Route::prefix('master')->group(function () {
     Route::get('client',[ClientController::class,'index']);

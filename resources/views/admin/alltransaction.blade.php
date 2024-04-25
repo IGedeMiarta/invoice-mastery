@@ -59,7 +59,7 @@
                                         </td>
                                         <td>
                                             <ul class="list-group">
-                                                <a href="#1">
+                                                <a href="{{ route('inv', $item->id) }}" target="_blank">
                                                     <li class="list-group-item list-group-item-info"> <i
                                                             class="mdi mdi-file-document"></i> Detail</li>
                                                 </a>
