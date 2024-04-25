@@ -125,14 +125,14 @@ function Base64($image_path){
 
 function terbilang($angka) {
     $bilangan = [
-        '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan'
+        '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 
+        'Sebelas', 'Dua Belas', 'Tiga Belas', 'Empat Belas', 'Lima Belas', 'Enam Belas', 'Tujuh Belas', 
+        'Delapan Belas', 'Sembilan Belas'
     ];
 
     $temp = '';
-    if ($angka < 10) {
+    if ($angka < 20) {
         $temp = $bilangan[$angka];
-    } elseif ($angka < 20) {
-        $temp = terbilang($angka - 10) . ' Belas';
     } elseif ($angka < 100) {
         $temp = terbilang($angka / 10) . ' Puluh ' . terbilang($angka % 10);
     } elseif ($angka < 200) {
@@ -149,8 +149,10 @@ function terbilang($angka) {
         $temp = terbilang($angka / 1000000000) . ' Milyar ' . terbilang($angka % 1000000000);
     }
 
+    // Tambahkan "Rupiah" pada akhir kalimat
     return $temp;
 }
+
 
 function df($time){
     return date('d M Y',strtotime($time));
