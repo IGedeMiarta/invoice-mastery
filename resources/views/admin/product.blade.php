@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label for="percent">Percent (%)<i class="text-danger">*</i></label>
-                            <input type="number" class="form-control mb-4 mb-md-0" id="percent" name="percent"
+                            <input type="text" class="form-control mb-4 mb-md-0" id="percent" name="percent"
                                 placeholder="10" />
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="form-group">
                             <label for="_percent">Percent (%)<i class="text-danger">*</i></label>
-                            <input type="number" class="form-control mb-4 mb-md-0" id="_percent" name="percent"
+                            <input type="text" class="form-control mb-4 mb-md-0" id="_percent" name="percent"
                                 placeholder="10" />
 
                         </div>

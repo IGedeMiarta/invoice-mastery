@@ -714,7 +714,7 @@
                         </tr>
                         @foreach ($trx->getDetails as $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->getProduct->name }}</td>
                                 <td>{{ $item->getProduct->percent }}%</td>
                                 <td>{{ num($item->price) }}</td>

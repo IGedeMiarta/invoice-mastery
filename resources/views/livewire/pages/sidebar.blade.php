@@ -36,7 +36,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('/master/service') }}"
-                                    class="nav-link {{ active_class(['master/service']) }}">Service</a>
+                                    class="nav-link {{ active_class(['master/service']) }}">Jenis Pajak</a>
                             </li>
                         </ul>
                     </div>

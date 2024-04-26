@@ -26,7 +26,7 @@
                             @endforeach
                         </select>
                         <div class="mt-2">
-                            <a href="#" data-toggle="modal" data-target="#addClient">Tambah Client</a>
+                            <a href="#" data-toggle="modal" data-target="#addClient">Create New</a>
                         </div>
                         <livewire:transaction.client-create />
                     </div>
@@ -62,7 +62,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-5">
-                            <label for="name">Service<i class="text-danger">*</i></label>
+                            <label for="name">Jenis Pajak<i class="text-danger">*</i></label>
                             <select wire:model="service"
                                 class=" form-control @error('service')
                                 is-invalid
@@ -80,7 +80,7 @@
                             @enderror
 
                             <div class="mt-2">
-                                <a href="#" data-toggle="modal" data-target="#addService">Tambah Service</a>
+                                <a href="#" data-toggle="modal" data-target="#addService">Create New</a>
                             </div>
 
                             <livewire:transaction.product-add />
@@ -123,7 +123,7 @@
                             <tbody>
                                 @forelse ($table as $index => $item)
                                     <tr>
-                                        <td style="width: 100px;">{{ $item['no'] }}</td>
+                                        <td style="width: 100px;">{{ $index + 1 }}</td>
                                         <td>{{ $item['product'] }}</td>
                                         <td style="width: 100px">{{ $item['percent'] }}%</td>
                                         <td style="width: 300px; text-align: end">{{ $item['price'] }}</td>

@@ -19,7 +19,7 @@
                         </div>
                         <div class="form-group" wire:ignore>
                             <label for="percent">Percent (%)<i class="text-danger">*</i></label>
-                            <input type="number" class="form-control mb-4 mb-md-0" id="percent" wire:model="percent"
+                            <input type="text" class="form-control mb-4 mb-md-0" id="percent" wire:model="percent"
                                 placeholder="10" required />
                         </div>
                     </div>
