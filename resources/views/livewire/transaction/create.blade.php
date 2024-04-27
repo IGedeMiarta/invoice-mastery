@@ -147,16 +147,6 @@
         </div>
     </div>
     <div class="row" style="justify-content: end">
-        {{-- <div class="col-md-6 mt-2">
-            <div class="card">
-                <div class="card-body">
-                    <label for="">NOTES</label>
-                    <div class="form-group">
-                        <textarea class="form-control" name="notes" wire:model="notes" rows="10"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <div class="col-md-6 stretch-card mt-2">
             <div class="card">
                 <div class="card-body">
@@ -230,7 +220,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <button class="btn btn-primary mt-3 btn-block btn-lg" wire:click="submitOrder">SUBMIT</button>
 </div>

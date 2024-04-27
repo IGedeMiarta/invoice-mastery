@@ -13,7 +13,7 @@
     </nav>
     <div class="row">
         <div class="col-md-12 ">
-            <livewire:transaction.create />
+            <livewire:transaction.create-list />
         </div>
     </div>
 @endsection

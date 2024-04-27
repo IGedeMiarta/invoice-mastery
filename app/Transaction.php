@@ -19,4 +19,8 @@ class Transaction extends Model
         return $this->hasMany(TransactionDetail::class,'trx_id','id');
 
     }
+    public function getDetailList(){
+        return $this->hasMany(TransactionDetailList::class,'trx_id','id');
+
+    }
 }

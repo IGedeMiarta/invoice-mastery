@@ -21,6 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->float('total',15,2);
             $table->float('sub_total',15,2);
             $table->float('due_total',15,2);
+            $table->integer('type')->default(1);
             $table->timestamps();
         });
     }

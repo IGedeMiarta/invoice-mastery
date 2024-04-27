@@ -14,6 +14,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TranactionController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -23,7 +24,7 @@ Route::get('/', function () {
     return view('dashboard',$data);
 });
 
-Route::get('print/{id}',[TranactionController::class,'inv'])->name('inv');
+Route::get('print/{id}',[TransactionController::class,'inv'])->name('inv');
 // Route::get('/invoice',function(){
 //     return view('print.invoice');
 // });
@@ -38,9 +39,11 @@ Route::prefix('master')->group(function () {
     Route::delete('product/{id}',[ProductController::class,'delete'])->name('product.delete');
 
 });
+Route::get('excel-format',[TransactionController::class,'downloadExcel'])->name('download.excel');
 
-Route::get('transaction/create',[TranactionController::class,'index'])->name('transaction.create');
-Route::get('transaction/all',[TranactionController::class,'all'])->name('transaction.all');
+Route::get('transaction/all',[TransactionController::class,'all'])->name('transaction.all');
+Route::get('transaction/create/inv-i',[TransactionController::class,'index'])->name('transaction.create');
+Route::get('transaction/create/inv-ii',[TransactionController::class,'createTwo'])->name('transaction.create2');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

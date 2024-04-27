@@ -51,12 +51,18 @@
                     <div class="collapse {{ show_class(['transaction/*']) }}" id="transaction">
                         <ul class="nav sub-menu">
                             <li class="nav-item">
-                                <a href="{{ url('/transaction/create') }}"
-                                    class="nav-link {{ active_class(['transaction/create']) }}">Create</a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ url('/transaction/all') }}"
                                     class="nav-link {{ active_class(['transaction/all']) }}">All</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/transaction/create/inv-i') }}"
+                                    class="nav-link {{ active_class(['transaction/create/inv-i']) }}">Create Invoice
+                                    I</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/transaction/create/inv-ii') }}"
+                                    class="nav-link {{ active_class(['transaction/create/inv-ii']) }}">Create Invoice
+                                    II</a>
                             </li>
                         </ul>
                     </div>

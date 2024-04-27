@@ -22,7 +22,7 @@
             height: 280mm;
             margin: 20px auto;
             padding: 40px;
-            /* border: 2px solid #ccc; */
+            /* border: 1px solid #ccc; */
         }
 
         .header {
@@ -44,7 +44,7 @@
 
         .companyInfo {
             margin-top: -25px;
-            width: 270px;
+            width: 260px;
             /* Atur jarak kanan */
         }
 
@@ -58,7 +58,7 @@
         .companyInfo p {
             margin-top: 5px;
             /* Atur jarak atas p */
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
             color: #2B2C2E;
         }
@@ -89,7 +89,7 @@
         }
 
         .companyMail {
-            font-size: 12px;
+            font-size: 14px;
             margin-left: 5px;
             margin-right: 5px;
         }
@@ -117,13 +117,13 @@
             margin-bottom: 5px;
             /* Atur jarak bawah h5 */
             font-weight: 700;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .invx p {
             margin-top: 5px;
             /* Atur jarak atas p */
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
             color: #2B2C2E;
         }
@@ -277,13 +277,13 @@
             margin-bottom: 5px;
             /* Atur jarak bawah h5 */
             font-weight: 700;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .textx p {
             margin-top: 5px;
             /* Atur jarak atas p */
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
             color: #2B2C2E;
         }
@@ -294,7 +294,7 @@
         }
 
         .ttd-text p {
-            font-size: 12px;
+            font-size: 14px;
             margin-top: -15px;
         }
 
@@ -328,6 +328,14 @@
             margin-top: 30px;
         }
 
+        .tbLampiran tbody td {
+            padding: 0.1rem;
+            padding-right: 8px;
+            vertical-align: top;
+            border: 3px solid white;
+            /* Set border color of cells to white and increase width */
+        }
+
         .tbInfo {
             width: 100%;
             border-collapse: collapse;
@@ -342,14 +350,6 @@
 
         .tbInfo tbody td {
             padding: 0.3rem;
-            padding-right: 8px;
-            vertical-align: top;
-            border: 3px solid white;
-            /* Set border color of cells to white and increase width */
-        }
-
-        .tbLampiran tbody td {
-            padding: 0.1rem;
             padding-right: 8px;
             vertical-align: top;
             border: 3px solid white;
@@ -408,13 +408,6 @@
             width: 55%;
         }
 
-        .text-end {
-            text-align: end;
-        }
-
-        .text-warning {
-            color: #772D2F;
-        }
 
         .tbInfo tfoot td {
             text-align: end;
@@ -424,6 +417,14 @@
         .total-value {
             color: white;
             /* Change the color to whatever you desire */
+        }
+
+        .text-end {
+            text-align: end;
+        }
+
+        .text-warning {
+            color: #772D2F;
         }
 
         .bg-warning {
@@ -492,6 +493,85 @@
             /* Ensure that the image is displayed */
         }
     </style>
+    <style>
+        .tbList {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tbList thead td {
+            padding: 0.75rem;
+            vertical-align: top;
+            /* border: 3px solid white; */
+            /* Set border color of cells to white and increase width */
+        }
+
+        .tbList tbody td {
+            padding: 0.3rem;
+            padding-right: 8px;
+            vertical-align: top;
+            border: 3px solid white;
+            /* Set border color of cells to white and increase width */
+        }
+
+        .tbList tfoot td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 8px;
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        .tbList thead td {
+            /* text-align: center; */
+            font-size: 15px;
+            /* Center align the text in the <thead> */
+            vertical-align: bottom;
+            border-bottom: 1px solid white;
+            /* Set header bottom border color to white and increase width */
+        }
+
+        .tbList tbody td {
+            border-bottom: px solid white;
+            line-height: 1.5;
+            font-size: 13px;
+            text-align: justify
+        }
+
+        .tbList tbody+tbody {
+            border-top: 3px solid white;
+            /* Set border between tbList body sections to white and increase width */
+
+        }
+
+        .tbList thead {
+            background-color: rgba(222, 65, 15, 0.2) !important;
+            print-color-adjust: exact;
+            /* Set opacity here */
+        }
+
+        .tbList thead .text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .tbList thead .info {
+            font-size: 14px;
+            color: #772D2F;
+            font-weight: bold;
+
+        }
+
+        .tbList .description {
+            width: 55%;
+        }
+
+
+        .tbList tfoot td {
+            text-align: end;
+        }
+    </style>
 </head>
 
 <body>
@@ -520,7 +600,7 @@
                 <div class="companySocial">
                     <div class="companyMail">
                         <span class="circle"><i class="far fa-envelope "></i></span>
-                        qnp.consuting@gmail.com
+                        qnp.consulting@gmail.com
                     </div>
                     <div class="companyMail">
                         <span class="circle"> <i class="fas fa-phone" style="transform: rotate(90deg);"></i></span>
@@ -657,85 +737,170 @@
                 <hr>
             </div>
         </div>
-        <div class="invoice">
-            <div class="header" style="margin-top: 80px">
-                <img src="{{ asset('logo.png') }}" alt="">
+        @if ($trx->type == 1)
+            <div class="invoice">
+                <div class="header" style="margin-top: 80px">
+                    <img src="{{ asset('logo.png') }}" alt="">
 
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                <div class="companyInfo">
-                    <h5>QNP CONSULTING</h5>
-                    <p>Graha Binakarsa, Mezzanine Floor Jl.H.R. Rasuna Said Kav. C18 Karet Kuningan, Setiabudi, Jakarta
-                        Selatan
-                    </p>
                 </div>
-                <div class="companySocial">
-                    <div class="companyMail">
-                        <span class="circle"><i class="far fa-envelope "></i></span>
-                        qnp.consuting@gmail.com
+                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <div class="companyInfo">
+                        <h5>QNP CONSULTING</h5>
+                        <p>Graha Binakarsa, Mezzanine Floor Jl.H.R. Rasuna Said Kav. C18 Karet Kuningan, Setiabudi,
+                            Jakarta
+                            Selatan
+                        </p>
                     </div>
-                    <div class="companyMail">
-                        <span class="circle"> <i class="fas fa-phone" style="transform: rotate(90deg);"></i></span>
-                        081315175769
-                    </div>
-                    <div class="companyMail">
-                        <span class="circle"> <i class="fas fa-globe"></i></span>
-                        qnpconsulting.com
+                    <div class="companySocial">
+                        <div class="companyMail">
+                            <span class="circle"><i class="far fa-envelope "></i></span>
+                            qnp.consulting@gmail.com
+                        </div>
+                        <div class="companyMail">
+                            <span class="circle"> <i class="fas fa-phone" style="transform: rotate(90deg);"></i></span>
+                            081315175769
+                        </div>
+                        <div class="companyMail">
+                            <span class="circle"> <i class="fas fa-globe"></i></span>
+                            qnpconsulting.com
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="lampiranInf">
-                <table class="tbLampiran">
-                    <tbody>
-                        <tr>
-                            <td>Lampiran Invoice No :</td>
-                            <td>{{ $trx->trx }}</td>
-                        </tr>
-                        <tr>
-                            <td>Date :</td>
-                            <td>{{ df($trx->created_at) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="tableInfoDetail">
-                <table class="tbInfo">
-                    <thead>
-                        <tr>
-                            <td colspan="4" class="description">Description</td>
-                            <td colspan="2">Amount</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="4">{{ $trx->desc }}</td>
-                            <td colspan="2"></td>
-                        </tr>
-                        @foreach ($trx->getDetails as $item)
+                <div class="lampiranInf">
+                    <table class="tbLampiran">
+                        <tbody>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->getProduct->name }}</td>
-                                <td>{{ $item->getProduct->percent }}%</td>
-                                <td>{{ num($item->price) }}</td>
-                                <td class="text-end text-warning" colspan="2">{{ num($item->amount) }}</td>
+                                <td>Lampiran Invoice No :</td>
+                                <td>{{ $trx->trx }}</td>
                             </tr>
-                        @endforeach
+                            <tr>
+                                <td>Date :</td>
+                                <td>{{ df($trx->created_at) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="4"></td>
-                            <td class="bg-warning total-label">TOTAL :</td>
-                            <td class="bg-warning total-value">{{ num($trx->total) }}</td>
-                        </tr>
-                    </tfoot>
-                </table>
+                <div class="tableInfoDetail">
+                    <table class="tbInfo">
+                        <thead>
+                            <tr>
+                                <td colspan="4" class="description">Description</td>
+                                <td colspan="2">Amount</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4">{{ $trx->desc }}</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            @foreach ($trx->getDetails as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->getProduct->name }}</td>
+                                    <td>{{ $item->getProduct->percent }}%</td>
+                                    <td>{{ num($item->price) }}</td>
+                                    <td class="text-end text-warning" colspan="2">{{ num($item->amount) }}</td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="bg-warning total-label">TOTAL :</td>
+                                <td class="bg-warning total-value">{{ num($trx->total) }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="terbilang">
+                    {{ terbilang($trx->total) }} Rupiah
+                </div>
             </div>
-            <div class="terbilang">
-                {{ terbilang($trx->total) }} Rupiah
+        @else
+            <div class="invoice">
+                <div class="header" style="margin-top: 50px">
+                    <img src="{{ asset('logo.png') }}" alt="">
+
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <div class="companyInfo">
+                        <h5>QNP CONSULTING</h5>
+                        <p>Graha Binakarsa, Mezzanine Floor Jl.H.R. Rasuna Said Kav. C18 Karet Kuningan, Setiabudi,
+                            Jakarta
+                            Selatan
+                        </p>
+                    </div>
+                    <div class="companySocial">
+                        <div class="companyMail">
+                            <span class="circle"><i class="far fa-envelope "></i></span>
+                            qnp.consulting@gmail.com
+                        </div>
+                        <div class="companyMail">
+                            <span class="circle"> <i class="fas fa-phone"
+                                    style="transform: rotate(90deg);"></i></span>
+                            081315175769
+                        </div>
+                        <div class="companyMail">
+                            <span class="circle"> <i class="fas fa-globe"></i></span>
+                            qnpconsulting.com
+                        </div>
+                    </div>
+                </div>
+                <div class="lampiranInf">
+                    <table class="tbLampiran">
+                        <tbody>
+                            <tr>
+                                <td>Lampiran Invoice No :</td>
+                                <td>{{ $trx->trx }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date :</td>
+                                <td>{{ df($trx->created_at) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tableInfoDetail">
+                    <table class="tbList">
+                        <thead>
+                            <tr>
+                                <td>Date</td>
+                                <td>Start</td>
+                                <td>End</td>
+                                <td>Who</td>
+                                <td>Description</td>
+                                <td>Cost</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($trx->getDetailList as $item)
+                                <tr>
+                                    <td>{{ $item->date }}</td>
+                                    <td>{{ $item->start }}</td>
+                                    <td>{{ $item->end }}</td>
+                                    <td>{{ $item->who }}</td>
+                                    <td style="width: 40%">{{ $item->description }}</td>
+                                    <td>{{ $item->cost }}</td>
+                                </tr>
+                            @endforeach
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="bg-warning total-label">TOTAL :</td>
+                                <td class="bg-warning total-value">{{ num($trx->total) }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
-        </div>
+
+        @endif
+
     </div>
     <script>
         function printContent() {
