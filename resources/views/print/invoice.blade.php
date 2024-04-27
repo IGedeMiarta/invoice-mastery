@@ -502,7 +502,7 @@
         .tbList thead td {
             padding: 0.75rem;
             vertical-align: top;
-            /* border: 3px solid white; */
+            border: 1px solid white;
             /* Set border color of cells to white and increase width */
         }
 
@@ -882,7 +882,7 @@
                                     <td>{{ $item->end }}</td>
                                     <td>{{ $item->who }}</td>
                                     <td style="width: 40%">{{ $item->description }}</td>
-                                    <td>{{ $item->cost }}</td>
+                                    <td>{{ num($item->cost) }}</td>
                                 </tr>
                             @endforeach
 
