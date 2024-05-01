@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TranactionController;
 use App\Http\Controllers\TransactionController;
@@ -19,15 +20,9 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
-Route::get('/', function () {
-    $data['title'] = 'Dashboard';
-    return view('dashboard',$data);
-});
+Route::get('/', [DashboardController::class,'index']);
 
 Route::get('print/{id}',[TransactionController::class,'inv'])->name('inv');
-// Route::get('/invoice',function(){
-//     return view('print.invoice');
-// });
 
 Route::prefix('master')->group(function () {
     Route::get('client',[ClientController::class,'index']);
