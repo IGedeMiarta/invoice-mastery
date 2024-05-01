@@ -17,7 +17,7 @@ class CreateList extends Component
     public $client_id;
     public $client,$trx,$fin_amount,$total_due,$subtotal,$add_name,$add_prercent;
     public $date,$start,$end,$who,$desc,$cost,$description;
-    public $excel;
+    public $excelInpt;
     public $table = [];
     public $additionalTable = [];
     public function mount(){
@@ -25,7 +25,8 @@ class CreateList extends Component
         $this->trx = trx();
     }
     public function submitTable(){
-        $file = $this->excel->store('excel');
+        dd($this->excelInpt);
+        $file = $this->excelInpt->store('excelInpt');
 
         $data = Excel::toArray([],$file);
 

@@ -204,7 +204,8 @@
                             <a href="{{ route('download.excel') }}" style="margin-top: 30px">download excel
                                 format</a>
                         </div>
-                        <input type="file" name="excel" wire:model="excel" class="dropify" id="">
+                        <input type="file" name="excelInpt" wire:model="excelInpt" class="dropify"
+                            id="">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary justClose"
