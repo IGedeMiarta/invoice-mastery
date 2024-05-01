@@ -25,7 +25,7 @@ class CreateList extends Component
         $this->trx = trx();
     }
     public function submitTable(){
-        dd($this->excelInpt);
+        // dd($this->excelInpt);
         $file = $this->excelInpt->store('excelInpt');
 
         $data = Excel::toArray([],$file);
