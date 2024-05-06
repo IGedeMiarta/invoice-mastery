@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionAdditionalsTable extends Migration
+class CreateAdditionalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTransactionAdditionalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_additionals', function (Blueprint $table) {
+        Schema::create('additionals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('trx_id');
             $table->string('name');
-            $table->integer('percent');
-            $table->boolean('type');
-            $table->float('total',15,2);
+            $table->float('percent',15,2);
+            $table->boolean('type')->comment("true = '+', false = '-'");
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTransactionAdditionalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_additionals');
+        Schema::dropIfExists('additionals');
     }
 }

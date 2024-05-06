@@ -11,11 +11,13 @@
 |
 */
 
+use App\Http\Controllers\AdditionalController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TranactionController;
 use App\Http\Controllers\TransactionController;
+use Database\Seeders\AdditionalSeeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -33,12 +35,17 @@ Route::prefix('master')->group(function () {
     Route::put('product/{id}',[ProductController::class,'update'])->name('product.update');
     Route::delete('product/{id}',[ProductController::class,'delete'])->name('product.delete');
 
+    Route::get('/additional',[AdditionalController::class,'index'])->name('additional');
+    Route::post('/additional',[AdditionalController::class,'save'])->name('additional.post');
+    Route::put('/additional/{id}',[AdditionalController::class,'update'])->name('additional.update');
+    Route::delete('/additional/{id}',[AdditionalController::class,'delete'])->name('additional.delete');
+
 });
 Route::get('excel-format',[TransactionController::class,'downloadExcel'])->name('download.excel');
 
 Route::get('transaction/all',[TransactionController::class,'all'])->name('transaction.all');
-Route::get('transaction/create/inv-i',[TransactionController::class,'index'])->name('transaction.create');
-Route::get('transaction/create/inv-ii',[TransactionController::class,'createTwo'])->name('transaction.create2');
+Route::get('transaction/create/inv-I',[TransactionController::class,'index'])->name('transaction.create');
+Route::get('transaction/create/inv-II',[TransactionController::class,'createTwo'])->name('transaction.create2');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

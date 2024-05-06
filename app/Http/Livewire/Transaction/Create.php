@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Transaction;
 
+use App\Additional;
 use App\Client;
 use App\Product;
 use App\Transaction;
@@ -37,6 +38,8 @@ class Create extends Component
     public $notes;
     public $desc;
     public $total_due;
+    public $additional = null;
+    public $additionalModel;
 
     protected $rules = [
         'service' => 'required',
@@ -48,6 +51,9 @@ class Create extends Component
         $this->client = Client::all();
         $this->trx = trx();
         $this->allProduct = Product::where('status',1)->get();
+        $this->additional == null ? false:true;
+        $this->additionalModel = Additional::where('status',1)->get();
+        
     }
     
     public function addProduk()
@@ -71,14 +77,27 @@ class Create extends Component
         $this->product = null;
         $this->price_amount = null;
         $this->service = null;
+        $this->addAditional();
     }
 
     public function addAditional(){
-        $this->additionalTable[] =[
-            'name' => $this->add_name,
-            'percent'=> $this->add_prercent.'%',
-            'amount' => num($this->subTotal() * $this->add_prercent / 100)
-        ];
+        $this->additional = true;
+        if (count($this->additionalTable) >=1) {
+            $this->subtotal = num($this->subTotal());
+            $this->add_name = null;
+            $this->add_prercent = null;
+            $this->total_due = num($this->getTotalDue());
+            return true;
+        };
+        $data = $this->additionalModel;
+        foreach ($data as $key => $value) {
+            $this->additionalTable[] = [
+                'name' => $value->name,
+                'percent'=> $value->percent.'%',
+                'amount' => num($this->subTotal() * $value->percent / 100),
+                'type'  => $value->type
+            ];
+        }
         $this->subtotal = num($this->subTotal());
         $this->add_name = null;
         $this->add_prercent = null;
@@ -115,6 +134,7 @@ class Create extends Component
                 $add->trx_id = $trx->id;
                 $add->name = $val['name'];
                 $add->percent = getAmount($val['percent']);
+                $add->type = $val['type'];
                 $add->total = getAmount($val['amount']);
                 $add->save();
             }
@@ -131,7 +151,12 @@ class Create extends Component
     public function getTotalDue(){
         $totalDue = 0;
         foreach ($this->additionalTable as $item) {
-            $totalDue += getAmount($item['amount']??0);
+            if ($item['type']) {
+               $totalDue += getAmount($item['amount']??0);
+            }else{
+                $totalDue -= getAmount($item['amount']??0);
+            }
+            
         }
         
         return $totalDue + $this->subtotal();
@@ -160,11 +185,14 @@ class Create extends Component
     {
         unset($this->table[$index]);
         $this->fin_amount = $this->getFinAmount();
+        $this->total_due =  num($this->getTotalDue());
+        $this->subtotal = num($this->subtotal());
         $this->render();
     }
     public function deleteAdditional($index){
         unset($this->additionalTable[$index]);
         $this->fin_amount = $this->getFinAmount();
+        $this->total_due =  num($this->getTotalDue());
         $this->render();
 
     }

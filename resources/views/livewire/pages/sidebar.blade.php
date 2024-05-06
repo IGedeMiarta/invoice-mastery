@@ -38,6 +38,10 @@
                                 <a href="{{ url('/master/service') }}"
                                     class="nav-link {{ active_class(['master/service']) }}">Jenis Pajak</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/master/additional') }}"
+                                    class="nav-link {{ active_class(['master/additional']) }}">Additional</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -55,13 +59,13 @@
                                     class="nav-link {{ active_class(['transaction/all']) }}">All</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/transaction/create/inv-i') }}"
-                                    class="nav-link {{ active_class(['transaction/create/inv-i']) }}">Create Invoice
+                                <a href="{{ url('/transaction/create/inv-I') }}"
+                                    class="nav-link {{ active_class(['transaction/create/inv-I']) }}">Create Invoice
                                     I</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/transaction/create/inv-ii') }}"
-                                    class="nav-link {{ active_class(['transaction/create/inv-ii']) }}">Create Invoice
+                                <a href="{{ url('/transaction/create/inv-II') }}"
+                                    class="nav-link {{ active_class(['transaction/create/inv-II']) }}">Create Invoice
                                     II</a>
                             </li>
                         </ul>

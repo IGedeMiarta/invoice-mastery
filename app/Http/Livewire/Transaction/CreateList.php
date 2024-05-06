@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Transaction;
 
+use App\Additional;
 use App\Client;
 use App\Transaction;
 use App\TransactionAdditional;
@@ -20,9 +21,14 @@ class CreateList extends Component
     public $excelInpt;
     public $table = [];
     public $additionalTable = [];
+    public $additional = null;
+    public $additionalModel;
+
     public function mount(){
         $this->client = Client::all();
         $this->trx = trx();
+        $this->additional == null ? false:true;
+        $this->additionalModel = Additional::where('status',1)->get();
     }
     public function submitTable(){
         // dd($this->excelInpt);
@@ -46,7 +52,9 @@ class CreateList extends Component
         }
         $this->dispatchBrowserEvent('closeModal');
         $this->getFinnAmount();
+         $this->addAditional();
         return 1;
+
     }
     public function addTable(){
         
@@ -67,14 +75,26 @@ class CreateList extends Component
         $this->getFinnAmount();
         $this->dispatchBrowserEvent('closeModalAdd');
         $this->render();
-
+        $this->addAditional();
     }
     public function addAditional(){
-        $this->additionalTable[] =[
-            'name' => $this->add_name,
-            'percent'=> $this->add_prercent.'%',
-            'amount' => num($this->subTotal() * $this->add_prercent / 100)
-        ];
+        $this->additional = true;
+        if (count($this->additionalTable) >=1) {
+            $this->subtotal = num($this->subTotal());
+            $this->add_name = null;
+            $this->add_prercent = null;
+            $this->total_due = num($this->getTotalDue());
+            return true;
+        };
+        $data = $this->additionalModel;
+        foreach ($data as $key => $value) {
+            $this->additionalTable[] = [
+                'name' => $value->name,
+                'percent'=> $value->percent.'%',
+                'amount' => num($this->subTotal() * $value->percent / 100),
+                'type'  => $value->type
+            ];
+        }
         $this->subtotal = num($this->subTotal());
         $this->add_name = null;
         $this->add_prercent = null;
@@ -98,6 +118,7 @@ class CreateList extends Component
         unset($this->additionalTable[$index]);
         $this->fin_amount = $this->getFinnAmount();
         $this->subtotal = $this->subTotal();
+        $this->total_due =  num($this->getTotalDue());
         $this->render();
     }
      public function refresh($index){
@@ -114,7 +135,11 @@ class CreateList extends Component
     public function getTotalDue(){
         $totalDue = 0;
         foreach ($this->additionalTable as $item) {
-            $totalDue += getAmount($item['amount']??0);
+            if ($item['type']) {
+               $totalDue += getAmount($item['amount']??0);
+            }else{
+                $totalDue -= getAmount($item['amount']??0);
+            }
         }
         
         return $totalDue + $this->subtotal();
@@ -151,6 +176,7 @@ class CreateList extends Component
                 $add->trx_id = $trx->id;
                 $add->name = $val['name'];
                 $add->percent = getAmount($val['percent']);
+                $add->type = $val['type'];
                 $add->total = getAmount($val['amount']);
                 $add->save();
             }

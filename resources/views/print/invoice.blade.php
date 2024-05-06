@@ -690,7 +690,8 @@
                                     <span class="text">{{ $item->name }} {{ $item->percent }}%</span>
                                 </td>
                                 <td>
-                                    <span class="info">{{ num($item->total) }}</span>
+                                    <span class="info">{{ $item->type ? '+' : '-' }}
+                                        {{ num($item->total) }}</span>
                                 </td>
                             </tr>
                         @endforeach

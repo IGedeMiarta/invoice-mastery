@@ -34,7 +34,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-warning btnClose" data-dismiss="modal" id="close-modal">
+                        <button type="button" class="btn btn-warning btnClose" data-dismiss="modal"
+                            id="closeModalClient">
                             <i data-feather="x"></i>Close</button>
                         <button type="submit" class="btn btn-primary"> <i data-feather="save"></i>Save changes</button>
                     </div>
@@ -48,11 +49,11 @@
     <script>
         $(document).ready(function() {
             Livewire.on('closeModal', function() {
-                const closeButton = $('#close-modal');
+                const closeButton = $('#closeModalClient');
                 if (closeButton.length > 0) {
                     closeButton.trigger('click');
                 } else {
-                    console.error('Button with ID "close-modal" not found');
+                    console.error('Button with ID "closeModalClient" not found');
                 }
             });
             Livewire.on('success', function(data) {

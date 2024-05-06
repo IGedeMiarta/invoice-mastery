@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" id="close-modal" data-dismiss="modal"> <i
+                        <button type="button" class="btn btn-warning" id="closeModalService" data-dismiss="modal"> <i
                                 data-feather="x"></i>Close</button>
                         <button type="submit" class="btn btn-primary"> <i data-feather="save"></i>Save changes</button>
                     </div>
@@ -37,7 +37,12 @@
     <script>
         $(document).ready(function() {
             Livewire.on('closeModal', function() {
-                $('#addService').modal('toggle');
+                const closeButton = $('#closeModalService');
+                if (closeButton.length > 0) {
+                    closeButton.trigger('click');
+                } else {
+                    console.error('Button with ID "closeModalService" not found');
+                }
             });
             Livewire.on('success', function(data) {
                 Toast.fire({
