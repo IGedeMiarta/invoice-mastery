@@ -79,26 +79,23 @@ class CreateList extends Component
     }
     public function addAditional(){
         $this->additional = true;
-        if (count($this->additionalTable) >=1) {
-            $this->subtotal = num($this->subTotal());
-            $this->add_name = null;
-            $this->add_prercent = null;
-            $this->total_due = num($this->getTotalDue());
-            return true;
-        };
-        $data = $this->additionalModel;
-        foreach ($data as $key => $value) {
-            $this->additionalTable[] = [
-                'name' => $value->name,
-                'percent'=> $value->percent.'%',
-                'amount' => num($this->subTotal() * $value->percent / 100),
-                'type'  => $value->type
-            ];
-        }
+        $this->refreshTable();
         $this->subtotal = num($this->subTotal());
         $this->add_name = null;
         $this->add_prercent = null;
         $this->total_due = num($this->getTotalDue());
+    }
+    public function refreshTable(){
+        $data = $this->additionalModel;
+        $this->additionalTable = [];
+        foreach ($data as $key => $value) {
+            $this->additionalTable[] = [
+                'name' => $value->name,
+                'percent'=> $value->percent.'%',
+                'amount' => num(($this->subTotal() / 100) * getAmount($value->percent) ),
+                'type'  => $value->type
+            ];
+        }
     }
     public function getFinnAmount(){
         $finAmount = 0;
