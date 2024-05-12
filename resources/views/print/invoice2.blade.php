@@ -827,10 +827,58 @@
                 @continue
             @endif
             <div class="invoice invoicePrint">
+                <div class="header" style="margin-top: 50px">
+                    <img src="{{ asset('logo.png') }}" alt="">
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <div class="companyInfo">
+                        <h5>QNP CONSULTING</h5>
+                        <p>Graha Binakarsa, Mezzanine Floor Jl.H.R. Rasuna Said Kav. C18 Karet Kuningan, Setiabudi,
+                            Jakarta
+                            Selatan
+                        </p>
+                    </div>
+                    <div class="companySocial">
+                        <div class="companyMail">
+                            <span class="circle"><i class="far fa-envelope "></i></span>
+                            qnp.consulting@gmail.com
+                        </div>
+                        <div class="companyMail">
+                            <span class="circle"> <i class="fas fa-phone"
+                                    style="transform: rotate(90deg);"></i></span>
+                            081315175769
+                        </div>
+                        <div class="companyMail">
+                            <span class="circle"> <i class="fas fa-globe"></i></span>
+                            qnpconsulting.com
+                        </div>
+                    </div>
+                </div>
+                <div class="lampiranInf">
+                    <table class="tbLampiran">
+                        <tbody>
+                            <tr>
+                                <td>Lampiran Invoice No :</td>
+                                <td>{{ $trx->trx }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date :</td>
+                                <td>{{ df($trx->created_at) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="tableInfoDetail">
                     <table class="tbList">
                         <tbody class="tbodyContainer">
-
+                            <tr class="thead">
+                                <td>Date</td>
+                                <td>Start</td>
+                                <td>End</td>
+                                <td>Who</td>
+                                <td>Description</td>
+                                <td style="text-align: end">Cost</td>
+                            </tr>
                             @foreach ($list[$i] as $index => $item)
                                 <tr class="tbody">
                                     <td>{{ $item->date }}</td>

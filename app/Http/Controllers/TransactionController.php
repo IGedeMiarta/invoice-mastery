@@ -36,7 +36,7 @@ class TransactionController extends Controller
             $trx = TransactionDetailList::where('trx_id', $id)->get();  
             
             $list = [];
-            $batchSize = 13;
+            $batchSize = 9;
             $totalRecords = $trx->count();
             $totalLists = ceil($totalRecords / $batchSize);
 
