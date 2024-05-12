@@ -36,7 +36,7 @@
         <div class="col-md-5 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Desctiption</h6>
+                    <h6 class="card-title">Description</h6>
                     <div class="input-group" wire:ignore>
                         <textarea name="desc" id="desc" wire:model="desc" cols="30" rows="5" class="form-control"
                             placeholder="Tax Service : Tax Audit Assistance..."></textarea>

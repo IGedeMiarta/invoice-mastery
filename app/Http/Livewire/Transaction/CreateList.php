@@ -52,7 +52,7 @@ class CreateList extends Component
         }
         $this->dispatchBrowserEvent('closeModal');
         $this->getFinnAmount();
-         $this->addAditional();
+        $this->addAditional();
         return 1;
 
     }
