@@ -33,10 +33,10 @@
         <div class="col-12 col-xl-12 stretch-card">
             <div class="row flex-grow">
                 <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
+                    <div class="card  " style="border-radius: 15px">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">Cleint</h6>
+                                <h6 class="card-title mb-0">Client</h6>
                                 <div class="dropdown mb-2 d-none">
                                     <button class="btn p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
@@ -79,10 +79,10 @@
                     </div>
                 </div>
                 <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
+                    <div class="card " style="border-radius: 15px; height: 150px">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">Total Transaction</h6>
+                                <h6 class="card-title mb-0 ">Total Transaction</h6>
                                 {{-- <div class="dropdown mb-2">
                                     <button class="btn p-0" type="button" id="dropdownMenuButton1" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
@@ -108,8 +108,8 @@
                                 </div> --}}
                             </div>
                             <div class="row">
-                                <div class="col-6 col-md-12 col-xl-5">
-                                    <h3 class="mb-2">{{ num($due) }}</h3>
+                                <div class="col-md-12">
+                                    <h3 class="mb-2 ">Rp {{ num($due) }}</h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-danger">
                                             {{-- <span>-2.8%</span>
@@ -125,10 +125,10 @@
                     </div>
                 </div>
                 <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
+                    <div class="card  " style="border-radius: 15px">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">Count Transaction</h6>
+                                <h6 class="card-title mb-0">Transaction</h6>
                                 {{-- <div class="dropdown mb-2">
                                     <button class="btn p-0" type="button" id="dropdownMenuButton2" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
@@ -487,7 +487,7 @@
                                     <td>NobleUI Laravel</td>
                                     <td>01/01/2021</td>
                                     <td>31/12/2021</td>
-                                    <td><span class="badge badge-danger-muted text-white">Coming soon</span></td>
+                                    <td><span class="badge badge-danger-muted ">Coming soon</span></td>
                                     <td>Yaretzi Mayo</td>
                                 </tr>
                                 <tr>
