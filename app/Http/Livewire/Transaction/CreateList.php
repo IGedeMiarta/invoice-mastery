@@ -23,6 +23,9 @@ class CreateList extends Component
     public $additionalTable = [];
     public $additional = null;
     public $additionalModel;
+    public $dates;
+    public $sub_total;
+    public $change = false;
 
     public function mount(){
         $this->client = Client::all();
@@ -55,6 +58,12 @@ class CreateList extends Component
         $this->addAditional();
         return 1;
 
+    }
+     public function changeSubtotal(){
+        $this->subtotal = $this->sub_total;
+        $this->change = true;
+        $this->refreshTable();
+        $this->addAditional();
     }
     public function addTable(){
         
@@ -126,8 +135,8 @@ class CreateList extends Component
         ];
         $this->total_due =  num($this->getTotalDue());
     }
-     public function subTotal(){
-        return bulatkan($this->getFinnAmount());
+    public function subTotal(){
+        return $this->change?getAmount($this->sub_total):bulatkan($this->getFinnAmount());
     }
     public function getTotalDue(){
         $totalDue = 0;
@@ -153,6 +162,7 @@ class CreateList extends Component
             $trx->total     = $this->getFinnAmount();
             $trx->sub_total  = $this->subTotal();
             $trx->due_total = $this->getTotalDue();
+            $trx->dates     = $this->dates;
             $trx->type      = 2;
             $trx->save();
 
@@ -182,7 +192,7 @@ class CreateList extends Component
             return redirect()->route('transaction.all')->with('success','Order Create');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // dd($th->getMessage());
+            dd($th->getMessage());
             $this->emit('error',$th->getMessage());
         }
     }

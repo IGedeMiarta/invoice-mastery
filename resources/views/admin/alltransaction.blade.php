@@ -40,7 +40,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td class="text-end" style="text-align: end">
                                             <p><b>{{ $item->trx }}</b> <br>
-                                                {{ dateFormat($item->created_at) }}
+                                                {{ dateFormat($item->dates) }}
                                             </p>
 
                                         </td>

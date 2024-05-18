@@ -40,6 +40,9 @@ class Create extends Component
     public $total_due;
     public $additional = null;
     public $additionalModel;
+    public $dates;
+    public $sub_total;
+    public $change = false;
 
     protected $rules = [
         'service' => 'required',
@@ -53,7 +56,12 @@ class Create extends Component
         $this->allProduct = Product::where('status',1)->get();
         $this->additional == null ? false:true;
         $this->additionalModel = Additional::where('status',1)->get();
-        
+    }
+    public function changeSubtotal(){
+        $this->subtotal = $this->sub_total;
+        $this->change = true;
+        $this->refreshTable();
+        $this->addAditional();
     }
     
     public function addProduk()
@@ -74,6 +82,7 @@ class Create extends Component
         $this->total =  $this->getTotalAmount();
         $this->fin_amount = $this->getFinAmount();
         $this->subtotal = num($this->subTotal());
+        $this->sub_total = num($this->subTotal());
         $this->product = null;
         $this->price_amount = null;
         $this->service = null;
@@ -101,7 +110,7 @@ class Create extends Component
         }
     }
     public function subTotal(){
-        return bulatkan($this->getTotalAmount());
+        return $this->change?getAmount($this->sub_total):bulatkan($this->getTotalAmount());
     }
 
     public function submitOrder(){
@@ -109,6 +118,7 @@ class Create extends Component
         $desc     = $this->desc;
         DB::beginTransaction();
         try {
+            // dd('submit');
             $trx = new Transaction();
             $trx->trx       = $this->trx;
             $trx->client_id = $client;
@@ -116,8 +126,8 @@ class Create extends Component
             $trx->total     = $this->getFinAmount();
             $trx->sub_total = $this->subTotal();
             $trx->due_total = $this->getTotalDue();
+            $trx->dates     = $this->dates;
             $trx->save();
-
             foreach ($this->table as $item) {
                 $detail = new TransactionDetail();
                 $detail->trx_id = $trx->id;
@@ -140,7 +150,7 @@ class Create extends Component
             return redirect()->route('transaction.all')->with('success','Order Create');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // dd($th->getMessage());
+            dd($th->getMessage());
             $this->emit('error',$th->getMessage());
         }
     }
@@ -153,10 +163,10 @@ class Create extends Component
             }else{
                 $totalDue -= getAmount($item['amount']??0);
             }
-            
         }
         
-        return $totalDue + $this->subtotal();
+        $total = $totalDue + $this->subtotal();
+        return $total;
     }
     public function getTotalAmount()
     {
