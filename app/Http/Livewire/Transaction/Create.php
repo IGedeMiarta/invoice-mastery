@@ -44,10 +44,6 @@ class Create extends Component
     public $sub_total;
     public $change = false;
 
-    protected $rules = [
-        'service' => 'required',
-        'price_amount' => 'required',
-    ];
 
     public $table = [];
     public function mount(){
@@ -62,6 +58,8 @@ class Create extends Component
         $this->change = true;
         $this->refreshTable();
         $this->addAditional();
+        $this->total_due = num($this->getTotalDue());
+
     }
     
     public function addProduk()
@@ -95,7 +93,7 @@ class Create extends Component
         $this->subtotal = num($this->subTotal());
         $this->add_name = null;
         $this->add_prercent = null;
-        $this->total_due = num($this->getTotalDue());
+        // $this->total_due = num($this->getTotalDue());
     }
     public function refreshTable(){
         $data = $this->additionalModel;
@@ -113,7 +111,14 @@ class Create extends Component
         return $this->change?getAmount($this->sub_total):bulatkan($this->getTotalAmount());
     }
 
+    protected $rules = [
+        'client_id' => 'required',
+        'desc' => 'required',
+        'dates' => 'required',
+    ];
     public function submitOrder(){
+        $this->validate();
+        
         $client   = $this->client_id;
         $desc     = $this->desc;
         DB::beginTransaction();

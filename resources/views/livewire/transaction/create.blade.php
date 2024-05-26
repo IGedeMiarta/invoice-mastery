@@ -18,14 +18,20 @@
                 <div class="card-body">
                     <h6 class="card-title">Client</h6>
                     <div class="form-group">
-                        <select name="client" id="client" class="form-control js-example-basic-single w-100"
+                        <select name="client" id="client"
+                            class="form-control js-example-basic-single w-100 @error('client_id')
+                            is-invalid
+                        @enderror"
                             wire:model="client_id">
                             <option value="0">-Select</option>
                             @foreach ($client as $item)
                                 <option value="{{ $item->id }}">{{ $item->company_name }}</option>
                             @endforeach
                         </select>
-                        <div class="mt-2">
+                        <div class="mt-2 d-flex justify-content-between">
+                            @error('client_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             <a href="#" data-toggle="modal" data-target="#addClient">Create New</a>
                         </div>
                         <livewire:transaction.client-create />
@@ -38,16 +44,28 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="dates">Dates</label>
-                        <div class="input-group" wire:ignore>
-                            <input type="date" wire:model="dates" id="dates" class="form-control">
+                        <div class="input-group">
+                            <input type="date" wire:model="dates" id="dates"
+                                class="form-control @error('desc')
+                                is-invalid
+                            @enderror">
                         </div>
+                        @error('dates')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
                         <label for="desc">Description</label>
-                        <div class="input-group" wire:ignore>
-                            <textarea name="desc" id="desc" wire:model="desc" cols="30" rows="5" class="form-control"
+                        <div class="input-group">
+                            <textarea name="desc" id="desc" wire:model="desc" cols="30" rows="5"
+                                class="form-control @error('desc')
+                                is-invalid
+                            @enderror"
                                 placeholder="Tax Service : Tax Audit Assistance..."></textarea>
                         </div>
+                        @error('desc')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>

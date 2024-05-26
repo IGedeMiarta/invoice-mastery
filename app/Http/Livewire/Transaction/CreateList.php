@@ -34,36 +34,71 @@ class CreateList extends Component
         $this->additionalModel = Additional::where('status',1)->get();
     }
     public function submitTable(){
-        // dd($this->excelInpt);
         $file = $this->excelInpt->store('excelInpt');
-
-        $data = Excel::toArray([],$file);
-
-
+    
+        $data = Excel::toArray([], $file);
+    
         $rows = $data[0];
-
-        // dd($rows);
+        // validation format
+        //  $this->emit('error', 'Error Info');
+    
         foreach (array_slice($rows, 1) as $row) {
-           $this->table[] = [
+            // Validate each cell
+            if (!isset($row[0]) || !preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $row[0])) {
+                $this->emit('error', 'Invalid date format in row: ' . json_encode($row));
+                continue;
+            }
+    
+            if (!isset($row[1]) || !strtotime($row[1])) {
+                $this->emit('error', 'Invalid start time in row: ' . json_encode($row));
+                continue;
+            }
+    
+            if (!isset($row[2]) || !strtotime($row[2])) {
+                $this->emit('error', 'Invalid end time in row: ' . json_encode($row));
+                continue;
+            }
+    
+            if (!isset($row[3]) || empty(trim($row[3]))) {
+                $this->emit('error', 'Invalid who in row: ' . json_encode($row));
+                continue;
+            }
+    
+            if (!isset($row[4]) || empty(trim($row[4]))) {
+                $this->emit('error', 'Invalid description in row: ' . json_encode($row));
+                continue;
+            }
+    
+            if (!isset($row[5]) || !is_numeric($row[5])) {
+                $this->emit('error', 'Invalid cost in row: ' . json_encode($row));
+                continue;
+            }
+    
+            // Add validated row to the table
+            $this->table[] = [
                 'date' => $row[0],
-                'start' => date('h:i',strtotime($row[1])),
-                'end' => date('h:i',strtotime($row[2])),
+                'start' => date('h:i', strtotime($row[1])),
+                'end' => date('h:i', strtotime($row[2])),
                 'who' => $row[3],
                 'description' => $row[4],
                 'cost' => num(getAmount($row[5])),
-           ];
+            ];
         }
+    
         $this->dispatchBrowserEvent('closeModal');
         $this->getFinnAmount();
         $this->addAditional();
         return 1;
-
     }
-     public function changeSubtotal(){
+    
+    
+    public function changeSubtotal(){
         $this->subtotal = $this->sub_total;
         $this->change = true;
         $this->refreshTable();
         $this->addAditional();
+        $this->total_due = num($this->getTotalDue());
+
     }
     public function addTable(){
         
@@ -92,7 +127,6 @@ class CreateList extends Component
         $this->subtotal = num($this->subTotal());
         $this->add_name = null;
         $this->add_prercent = null;
-        $this->total_due = num($this->getTotalDue());
     }
     public function refreshTable(){
         $data = $this->additionalModel;
@@ -150,15 +184,20 @@ class CreateList extends Component
         
         return $totalDue + $this->subtotal();
     }
+    protected $rules = [
+        'client_id' => 'required',
+        'desc' => 'required',
+        'dates' => 'required',
+    ];
      public function submitOrder(){
-        $client   = $this->client_id;
-        $desc     = $this->desc;
+        $this->validate();
+        
         DB::beginTransaction();
         try {
             $trx = new Transaction();
             $trx->trx       = $this->trx;
-            $trx->client_id = $client;
-            $trx->desc      = $desc;
+            $trx->client_id = $this->client_id;
+            $trx->desc      = $this->desc;
             $trx->total     = $this->getFinnAmount();
             $trx->sub_total  = $this->subTotal();
             $trx->due_total = $this->getTotalDue();
