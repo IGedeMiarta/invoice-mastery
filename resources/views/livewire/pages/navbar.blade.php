@@ -181,7 +181,7 @@
                                     </a>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a href="javascript:;" class="nav-link">
+                                    <a href="{{ route('logout') }}" class="nav-link">
                                         <i data-feather="log-out"></i>
                                         <span>Log Out</span>
                                     </a>

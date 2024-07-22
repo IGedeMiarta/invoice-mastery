@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\AdditionalController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -22,30 +23,37 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
-Route::get('/', [DashboardController::class,'index']);
 
-Route::get('print/{id}',[TransactionController::class,'inv'])->name('inv');
+Route::get('/',[AuthController::class,'login'])->name('login')->middleware('guest');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
-Route::prefix('master')->group(function () {
-    Route::get('client',[ClientController::class,'index']);
-    Route::post('client',[ClientController::class,'post'])->name('client.post');
-    Route::put('client/{id}',[ClientController::class,'update'])->name('client.update');
-    Route::get('service',[ProductController::class,'index'])->name('product');
-    Route::post('product',[ProductController::class,'post'])->name('product.post');
-    Route::put('product/{id}',[ProductController::class,'update'])->name('product.update');
-    Route::delete('product/{id}',[ProductController::class,'delete'])->name('product.delete');
+    Route::get('print/{id}',[TransactionController::class,'inv'])->name('inv');
 
-    Route::get('/additional',[AdditionalController::class,'index'])->name('additional');
-    Route::post('/additional',[AdditionalController::class,'save'])->name('additional.post');
-    Route::put('/additional/{id}',[AdditionalController::class,'update'])->name('additional.update');
-    Route::delete('/additional/{id}',[AdditionalController::class,'delete'])->name('additional.delete');
+    Route::prefix('master')->group(function () {
+        Route::get('client',[ClientController::class,'index']);
+        Route::post('client',[ClientController::class,'post'])->name('client.post');
+        Route::put('client/{id}',[ClientController::class,'update'])->name('client.update');
+        Route::get('service',[ProductController::class,'index'])->name('product');
+        Route::post('product',[ProductController::class,'post'])->name('product.post');
+        Route::put('product/{id}',[ProductController::class,'update'])->name('product.update');
+        Route::delete('product/{id}',[ProductController::class,'delete'])->name('product.delete');
+
+        Route::get('/additional',[AdditionalController::class,'index'])->name('additional');
+        Route::post('/additional',[AdditionalController::class,'save'])->name('additional.post');
+        Route::put('/additional/{id}',[AdditionalController::class,'update'])->name('additional.update');
+        Route::delete('/additional/{id}',[AdditionalController::class,'delete'])->name('additional.delete');
+
+    });
+    Route::get('excel-format',[TransactionController::class,'downloadExcel'])->name('download.excel');
+
+    Route::get('transaction/all',[TransactionController::class,'all'])->name('transaction.all');
+    Route::get('transaction/create/inv-I',[TransactionController::class,'index'])->name('transaction.create');
+    Route::get('transaction/create/inv-II',[TransactionController::class,'createTwo'])->name('transaction.create2');
+
+    Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
 });
-Route::get('excel-format',[TransactionController::class,'downloadExcel'])->name('download.excel');
-
-Route::get('transaction/all',[TransactionController::class,'all'])->name('transaction.all');
-Route::get('transaction/create/inv-I',[TransactionController::class,'index'])->name('transaction.create');
-Route::get('transaction/create/inv-II',[TransactionController::class,'createTwo'])->name('transaction.create2');
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

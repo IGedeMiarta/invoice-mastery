@@ -41,10 +41,8 @@ License: You must have a valid license purchased only from https://themeforest.n
     <script src="{{ asset('assets/js/spinner.js') }}"></script>
 
     <div class="main-wrapper" id="app">
-        {{-- @include('layout.sidebar') --}}
         <livewire:pages.sidebar />
         <div class="page-wrapper">
-            {{-- @include('layout.header') --}}
             <livewire:pages.navbar />
             <div class="page-content">
                 @yield('content')
