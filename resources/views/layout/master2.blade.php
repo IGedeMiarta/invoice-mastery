@@ -9,7 +9,7 @@ License: You must have a valid license purchased only from https://themeforest.n
 <html>
 
 <head>
-    <title>NobleUI Laravel Admin Dashboard Template</title>
+    <title>{{ $title ?? '' }} - QNP Consulting</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,8 +17,7 @@ License: You must have a valid license purchased only from https://themeforest.n
     <!-- CSRF Token -->
     <meta name="_token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
-
+    <link rel="shortcut icon" href="{{ asset('logo.png') }}">
     <!-- plugin css -->
     <link href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" />
