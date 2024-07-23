@@ -44,7 +44,7 @@
 
         .companyInfo {
             margin-top: -25px;
-            width: 260px;
+            width: 245px;
             /* Atur jarak kanan */
         }
 
@@ -604,7 +604,7 @@
                     </div>
                     <div class="companyMail">
                         <span class="circle"> <i class="fas fa-phone" style="transform: rotate(90deg);"></i></span>
-                        081315175769
+                        +6281315175769
                     </div>
                     <div class="companyMail">
                         <span class="circle"> <i class="fas fa-globe"></i></span>
@@ -627,7 +627,7 @@
                 <div class="description">
                     <h5 class="invText">Description</h5>
                     <div class="invx">
-                        <p>
+                        <p class="text-end">
                             {{ $trx->desc }}
                         </p>
                     </div>
@@ -690,7 +690,7 @@
                                     <span class="text">{{ $item->name }} {{ $item->percent }}%</span>
                                 </td>
                                 <td>
-                                    <span class="info">{{ $item->type ? '+' : '-' }}
+                                    <span class="info">
                                         {{ num($item->total) }}</span>
                                 </td>
                             </tr>
@@ -715,12 +715,23 @@
                     <h5 class="text">Note</h5>
                     <div class="textx">
                         <h5>Complete The Payment Transaction Via :</h5>
-
-                        <p>
-                            Account Name : Persekutuan Purbaya, Hartono, Hutapea & Rekan <br>
-                            Bank Name : BCA KCP PLAZA INDEX <br>
-                            No Rek : 7340777811
-                        </p>
+                        <table>
+                            <tr>
+                                <td>Account Name</td>
+                                <td>:</td>
+                                <td>Persekutuan Purbaya, Hartono, Hutapea & Rekan</td>
+                            </tr>
+                            <tr>
+                                <td>Bank Name</td>
+                                <td>:</td>
+                                <td>BCA KCP PLAZA INDEX</td>
+                            </tr>
+                            <tr>
+                                <td>No Rek</td>
+                                <td>:</td>
+                                <td>7340777811</td>
+                            </tr>
+                        </table>
                         <h5>Terms: Payment due date 10 (Ten) days</h5>
                     </div>
                 </div>
@@ -730,7 +741,7 @@
                 <div class="ttd-text">
                     <h5>Wawan Setiyo Hartono </h5>
                     <p>
-                        Managing Director
+                        Managing Partner
                     </p>
                 </div>
             </div>
@@ -771,7 +782,7 @@
                     <table class="tbLampiran">
                         <tbody>
                             <tr>
-                                <td>Lampiran Invoice No :</td>
+                                <td>Invoice No :</td>
                                 <td>{{ $trx->trx }}</td>
                             </tr>
                             <tr>
