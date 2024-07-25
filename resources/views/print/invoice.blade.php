@@ -770,7 +770,7 @@
                         </div>
                         <div class="companyMail">
                             <span class="circle"> <i class="fas fa-phone" style="transform: rotate(90deg);"></i></span>
-                            081315175769
+                            +6281315175769
                         </div>
                         <div class="companyMail">
                             <span class="circle"> <i class="fas fa-globe"></i></span>
@@ -852,7 +852,7 @@
                         <div class="companyMail">
                             <span class="circle"> <i class="fas fa-phone"
                                     style="transform: rotate(90deg);"></i></span>
-                            081315175769
+                            +6281315175769
                         </div>
                         <div class="companyMail">
                             <span class="circle"> <i class="fas fa-globe"></i></span>
