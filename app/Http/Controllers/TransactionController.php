@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Transaction;
+use App\TransactionAdditional;
 use App\TransactionDetail;
 use App\TransactionDetailList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 
 class TransactionController extends Controller
@@ -14,8 +16,9 @@ class TransactionController extends Controller
         $data['title'] = 'Create Invoice';
         return view('admin.transaction',$data);
     }
-    public function createTwo(){
+    public function createTwo(Request $request){
         $data['title'] = 'Create Invoice II';
+        $data['request'] = $request;
         return view('admin.transaction2',$data);
     }
 
@@ -71,6 +74,38 @@ class TransactionController extends Controller
         } else {
             // Return a 404 response if the file doesn't exist
             abort(404);
+        }
+    }
+    public function edit($id)
+    {
+        $trx = Transaction::find($id);
+        if ($trx->type == 2) {
+            return redirect()->route('transaction.create2',['edit'=>$id]);
+        }else{
+            return redirect()->route('transaction.create',['edit'=>$id]);
+        }
+    }
+    public function delete($id){
+        $trx = Transaction::find($id);
+        if (!$trx) {
+           return redirect()->back()->with('error','Transaction Id Not Found!');
+        }
+        DB::beginTransaction();
+        try {
+
+            TransactionAdditional::where('trx_id',$trx->id)->delete();
+            if ($trx->type == 2) {
+                TransactionDetailList::where('trx_id',$trx->id)->delete();
+            }else{
+                TransactionDetail::where('trx_id',$trx->id)->delete();
+            }
+            $trx->delete();
+            DB::commit();
+            return redirect()->back()->with('success','Transaction Deleted');
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error','Error: '.$th->getMessage());
+            
         }
     }
 }

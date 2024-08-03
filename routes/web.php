@@ -18,11 +18,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TranactionController;
 use App\Http\Controllers\TransactionController;
+use App\Transaction;
 use Database\Seeders\AdditionalSeeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-
+use Maatwebsite\Excel\Row;
 
 Route::get('/',[AuthController::class,'login'])->name('login')->middleware('guest');
 Route::group(['middleware' => ['auth']], function () {
@@ -48,6 +49,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('excel-format',[TransactionController::class,'downloadExcel'])->name('download.excel');
 
     Route::get('transaction/all',[TransactionController::class,'all'])->name('transaction.all');
+    Route::get('transaction/edit/{id}',[TransactionController::class,'edit'])->name('transaction.edit');
+    Route::get('transaction/delete/{id}',[TransactionController::class,'delete'])->name('transaction.delete');
     Route::get('transaction/create/inv-I',[TransactionController::class,'index'])->name('transaction.create');
     Route::get('transaction/create/inv-II',[TransactionController::class,'createTwo'])->name('transaction.create2');
 

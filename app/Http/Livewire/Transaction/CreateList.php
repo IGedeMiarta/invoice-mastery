@@ -7,6 +7,7 @@ use App\Client;
 use App\Transaction;
 use App\TransactionAdditional;
 use App\TransactionDetailList;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -27,7 +28,8 @@ class CreateList extends Component
     public $sub_total;
     public $change = false;
 
-    public function mount(){
+    public function mount($data){
+        dd($data);
         $this->client = Client::all();
         $this->trx = trx();
         $this->additional == null ? false:true;

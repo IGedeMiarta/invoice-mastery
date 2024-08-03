@@ -63,10 +63,14 @@
                                                     <li class="list-group-item list-group-item-info"> <i
                                                             class="mdi mdi-file-document"></i> Detail</li>
                                                 </a>
-                                                {{-- <a href="#2">
+                                                <a href="{{ route('transaction.edit', $item->id) }}">
+                                                    <li class="list-group-item list-group-item-warning"> <i
+                                                            class="mdi  mdi-pencil"></i> Edit</li>
+                                                </a>
+                                                <a href="{{ route('transaction.delete', $item->id) }}">
                                                     <li class="list-group-item list-group-item-danger"> <i
-                                                            class="mdi mdi-file-pdf"></i> Print</li>
-                                                </a> --}}
+                                                            class="mdi mdi-trash-can"></i> Delete</li>
+                                                </a>
                                             </ul>
                                         </td>
                                     </tr>

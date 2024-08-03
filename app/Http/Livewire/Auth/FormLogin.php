@@ -7,7 +7,8 @@ use Livewire\Component;
 
 class FormLogin extends Component
 {
-    public $email,$password,$remember;
+    public $email,$password;
+    public $remember = false;
     protected $rules = [
         'email' => 'required|email',
         'password'=>'required'
