@@ -49,7 +49,7 @@
                                                 <b>{{ $item->getClient?->company_name }}</b> <br>
                                                 {{ $item->getClient?->name }} <br>
                                                 {{ $item->getClient?->position }} <br>
-                                                {{ $item->getClient?->company_address }} <br>
+                                                {{ cutStr($item->getClient?->company_address) }} <br>
                                             </p>
                                         </td>
                                         <td>{{ rp($item->total) }}</td>
