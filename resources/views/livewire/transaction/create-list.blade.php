@@ -164,7 +164,7 @@
                                 <div class="form-group" wire:ignore>
                                     <label for="notes"><i class="text-danger">*</i></label>
                                     <button class="btn btn-success form-control"
-                                        wire:click="changeSubtotal">Change</button>
+                                        wire:click="changeSubtotal">SET</button>
                                 </div>
                             </div>
                         </div>

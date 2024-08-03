@@ -152,8 +152,8 @@
                                     <th>No</th>
                                     <th>Name</th>
                                     <th>Percent</th>
-                                    <th>Price</th>
-                                    <th>Amount</th>
+                                    <th style="width: 300px; text-align: end">Price</th>
+                                    <th style="width: 300px; text-align: end">Amount</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -198,7 +198,7 @@
                                 <div class="form-group" wire:ignore>
                                     <label for="notes"><i class="text-danger">*</i></label>
                                     <button class="btn btn-success form-control"
-                                        wire:click="changeSubtotal">Change</button>
+                                        wire:click="changeSubtotal">SET</button>
                                 </div>
                             </div>
                         </div>
