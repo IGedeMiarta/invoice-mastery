@@ -51,8 +51,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('transaction/all',[TransactionController::class,'all'])->name('transaction.all');
     Route::get('transaction/edit/{id}',[TransactionController::class,'edit'])->name('transaction.edit');
     Route::get('transaction/delete/{id}',[TransactionController::class,'delete'])->name('transaction.delete');
-    Route::get('transaction/create/inv-I',[TransactionController::class,'index'])->name('transaction.create');
-    Route::get('transaction/create/inv-II',[TransactionController::class,'createTwo'])->name('transaction.create2');
+    Route::get('transaction/form/inv-I',[TransactionController::class,'index'])->name('transaction.create');
+    Route::get('transaction/form/inv-II',[TransactionController::class,'createTwo'])->name('transaction.create2');
 
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 

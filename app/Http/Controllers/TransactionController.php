@@ -18,7 +18,6 @@ class TransactionController extends Controller
     }
     public function createTwo(Request $request){
         $data['title'] = 'Create Invoice II';
-        $data['request'] = $request;
         return view('admin.transaction2',$data);
     }
 

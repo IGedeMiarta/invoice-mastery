@@ -59,13 +59,13 @@
                                     class="nav-link {{ active_class(['transaction/all']) }}">All</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/transaction/create/inv-I') }}"
-                                    class="nav-link {{ active_class(['transaction/create/inv-I']) }}">Create Invoice
+                                <a href="{{ url('/transaction/form/inv-I') }}"
+                                    class="nav-link {{ active_class(['transaction/form/inv-I']) }}">Create Invoice
                                     I</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/transaction/create/inv-II') }}"
-                                    class="nav-link {{ active_class(['transaction/create/inv-II']) }}">Create Invoice
+                                <a href="{{ url('/transaction/form/inv-II') }}"
+                                    class="nav-link {{ active_class(['transaction/form/inv-II']) }}">Create Invoice
                                     II</a>
                             </li>
                         </ul>

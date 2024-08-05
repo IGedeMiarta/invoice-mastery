@@ -8,6 +8,7 @@ use App\Product;
 use App\Transaction;
 use App\TransactionAdditional;
 use App\TransactionDetail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -44,15 +45,62 @@ class Create extends Component
     public $sub_total;
     public $change = false;
 
+    public $modelEdit;
+
 
     public $table = [];
-    public function mount(){
+    public function mount(Request $request){
+        
         $this->client = Client::all();
         $this->trx = trx();
         $this->allProduct = Product::where('status',1)->get();
         $this->additional == null ? false:true;
         $this->additionalModel = Additional::where('status',1)->get();
+
+        if ($request->edit) {
+            $this->onEditFunction($request->edit);
+        }
     }
+
+
+    private function onEditFunction($id){
+        $trx = Transaction::find($id);
+        $trx_detail = TransactionDetail::with('getProduct')->where('trx_id',$trx->id)->get();
+        $trx_add    = TransactionAdditional::where('trx_id',$trx->id)->get();
+
+        $this->total    = $trx->total;
+        $this->sub_total = num($trx->sub_total);
+        $this->total_due = num($trx->due_total);
+        $this->trx = $trx->trx;
+        $this->client_id = $trx->client_id;
+        $this->desc = $trx->desc;
+        $this->dates = $trx->dates;
+        foreach ($trx_detail as $i => $detail) {
+            $this->table[] = [
+                'id'        => $detail->id,
+                'no'        => $i+1,
+                'product' => $detail->getProduct->name,
+                'product_id' => $detail->product_id,
+                'percent'   => $detail->getProduct->percent,
+                'price' =>num($detail->price),
+                'amount' => num($detail->amount)
+            ];
+        }
+        foreach ($trx_add as $key => $add) {
+            $this->additionalTable[] = [
+                'id'        => $add->id,
+                'name'      => $add->name,
+                'percent'   => $add->percent.'%',
+                'amount'    => num(($this->subTotal() / 100) * getAmount($add->percent) ),
+                'type'      => $add->type
+            ];
+        }
+
+        $this->fin_amount = $this->getFinAmount();
+        $this->modelEdit = $trx;
+    }
+
+
     public function changeSubtotal(){
         $this->subtotal = $this->sub_total;
         $this->change = true;
@@ -93,7 +141,6 @@ class Create extends Component
         $this->subtotal = num($this->subTotal());
         $this->add_name = null;
         $this->add_prercent = null;
-        // $this->total_due = num($this->getTotalDue());
     }
     public function refreshTable(){
         $data = $this->additionalModel;
@@ -119,29 +166,87 @@ class Create extends Component
     public function submitOrder(){
         $this->validate();
         
-        $client   = $this->client_id;
-        $desc     = $this->desc;
         DB::beginTransaction();
         try {
-            // dd('submit');
-            $trx = new Transaction();
-            $trx->trx       = $this->trx;
-            $trx->client_id = $client;
-            $trx->desc      = $desc;
-            $trx->total     = $this->getFinAmount();
-            $trx->sub_total = $this->subTotal();
-            $trx->due_total = $this->getTotalDue();
-            $trx->dates     = $this->dates;
-            $trx->save();
-            foreach ($this->table as $item) {
+           
+            if ($this->modelEdit) {
+                $this->updateTransaction();
+                $msg = 'Invoice Updated';
+
+            }else{
+                $this->submitTransaction();
+                $msg = 'Invoice Create';
+            }
+
+            DB::commit();
+            return redirect()->route('transaction.all')->with('success',$msg);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th->getMessage());
+            $this->emit('error',$th->getMessage());
+        }
+    }
+
+    private function updateTransaction()
+    {
+        $trx = $this->modelEdit;
+        $trx->trx       = $this->trx;
+        $trx->client_id = $this->client_id;
+        $trx->desc      = $this->desc;
+        $trx->total     = $this->getFinAmount();
+        $trx->sub_total = $this->subTotal();
+        $trx->due_total = $this->getTotalDue();
+        $trx->dates     = $this->dates;
+        $trx->save();
+
+        $existingDetailIds = TransactionDetail::where('trx_id', $trx->id)->pluck('id')->toArray();
+        $newDetailIds = [];
+
+        foreach ($this->table as $item) {
+            if (isset($item['id'])) {
+                // Update existing detail
+                $detail = TransactionDetail::find($item['id']);
+                $detail->product_id = $item['product_id'];
+                $detail->price = getAmount($item['price']);
+                $detail->amount = getAmount($item['amount']);
+                $detail->save();
+                
+                $newDetailIds[] = $item['id'];
+            } else {
+                // Insert new detail
                 $detail = new TransactionDetail();
                 $detail->trx_id = $trx->id;
                 $detail->product_id = $item['product_id'];
-                $detail->price      = getAmount($item['price']);
-                $detail->amount      = getAmount($item['amount']);
+                $detail->price = getAmount($item['price']);
+                $detail->amount = getAmount($item['amount']);
                 $detail->save();
+                
+                $newDetailIds[] = $detail->id; // Ensure new inserted IDs are tracked
             }
-            foreach ($this->additionalTable as $val) {
+        }
+        // Delete any details that were not included in the new data
+        $detailsToDelete = array_diff($existingDetailIds, $newDetailIds);
+        TransactionDetail::whereIn('id', $detailsToDelete)->delete();
+
+
+        
+        // Handling additionalTable
+        $existingAdditionalIds = TransactionAdditional::where('trx_id', $trx->id)->pluck('id')->toArray();
+        $newAdditionalIds = [];
+
+        foreach ($this->additionalTable as $val) {
+            if (isset($val['id'])) {
+                // Update existing additional
+                $add = TransactionAdditional::find($val['id']);
+                $add->name = $val['name'];
+                $add->percent = getAmount($val['percent']);
+                $add->type = $val['type'];
+                $add->total = getAmount($val['amount']);
+                $add->save();
+
+                $newAdditionalIds[] = $val['id'];
+            } else {
+                // Insert new additional
                 $add = new TransactionAdditional();
                 $add->trx_id = $trx->id;
                 $add->name = $val['name'];
@@ -149,14 +254,42 @@ class Create extends Component
                 $add->type = $val['type'];
                 $add->total = getAmount($val['amount']);
                 $add->save();
-            }
 
-            DB::commit();
-            return redirect()->route('transaction.all')->with('success','Order Create');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            dd($th->getMessage());
-            $this->emit('error',$th->getMessage());
+                $newAdditionalIds[] = $add->id; // Ensure new inserted IDs are tracked
+            }
+        }
+
+        // Delete any additionals that were not included in the new data
+        $additionalsToDelete = array_diff($existingAdditionalIds, $newAdditionalIds);
+        TransactionAdditional::whereIn('id', $additionalsToDelete)->delete();
+    }
+
+    private function submitTransaction(){
+        $trx = new Transaction();
+        $trx->trx       = $this->trx;
+        $trx->client_id = $this->client_id;
+        $trx->desc      = $this->desc;
+        $trx->total     = $this->getFinAmount();
+        $trx->sub_total = $this->subTotal();
+        $trx->due_total = $this->getTotalDue();
+        $trx->dates     = $this->dates;
+        $trx->save();
+        foreach ($this->table as $item) {
+            $detail = new TransactionDetail();
+            $detail->trx_id = $trx->id;
+            $detail->product_id = $item['product_id'];
+            $detail->price      = getAmount($item['price']);
+            $detail->amount      = getAmount($item['amount']);
+            $detail->save();
+        }
+        foreach ($this->additionalTable as $val) {
+            $add = new TransactionAdditional();
+            $add->trx_id = $trx->id;
+            $add->name = $val['name'];
+            $add->percent = getAmount($val['percent']);
+            $add->type = $val['type'];
+            $add->total = getAmount($val['amount']);
+            $add->save();
         }
     }
 
@@ -219,15 +352,15 @@ class Create extends Component
 
     protected $listeners = ['reloadClient','reloadProduk'];
 
-    public function reloadClient()
+    public function reloadClient(Request $request)
     {
         $client = Client::orderByDesc('id')->first();
         $this->client = $client->id;
-        $this->mount();
+        $this->mount($request);
         $this->render();
     }
-    public function reloadProduk(){
-        $this->mount();
+    public function reloadProduk(Request $request){
+        $this->mount($request);
         $this->render();
         $this->emit('success');
     }
