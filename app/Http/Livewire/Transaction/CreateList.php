@@ -29,7 +29,6 @@ class CreateList extends Component
     public $change = false;
 
     public function mount($data){
-        dd($data);
         $this->client = Client::all();
         $this->trx = trx();
         $this->additional == null ? false:true;
